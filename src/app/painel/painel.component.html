@@ -1,0 +1,71 @@
+<po-page-default
+  p-title="Painel de Orçamentos">
+  <div class="po-row">
+    <po-chart
+        class="po-lg-6 po-mt-2"
+        p-title="Orçamentos neste ano"
+        [p-series]="chartInadimplentes"
+        [p-type]="chartType"
+        (p-series-click)="showMeTheDates($event)"
+      >
+    </po-chart>
+    <po-chart
+        class="po-lg-6 po-mt-2"
+        p-title="Histórico de orçamentos por mês."
+        [p-options]="options"
+        [p-categories]="categories"
+        [p-series]="participationByCountryInWorldExports"
+        [p-type]="participationByCountryInWorldExportsType"
+      >
+      </po-chart>
+  </div>
+  <po-divider></po-divider>
+
+<po-table
+  p-container="true"
+  [p-height]="400"
+  [p-hide-batch-actions]="false"
+  [p-hide-table-search]="false"
+  [p-selectable]="true"
+  [p-sort]="true"
+  [p-striped]="true"
+  [p-actions]="actions"
+  [p-columns]="columns"
+  [p-items]="items"
+  [p-max-columns]="7"
+  (p-collapsed)="onCollapseDetail()"
+  (p-expanded)="onExpandDetail()"
+  (p-selected)="sumTotal($event)"
+  (p-unselected)="decreaseTotal($event)"
+  (p-change-visible-columns)="changeColumnVisible($event)"
+  (p-restore-column-manager)="restoreColumn()"
+  (p-delete-items)="deleteItems($event)"
+>
+</po-table>
+
+<po-divider></po-divider>
+
+<po-info
+  class="po-md-6 po-mb-sm-2 po-mb-md-2 po-lb-lg-2"
+  p-label="Valor Total" 
+  p-value="{{ total | currency: 'BRL' }}"
+>
+</po-info>
+
+<div class="po-row">
+  <!-- <po-button class="po-md-3" p-icon="ICON_CART" p-label="Add items to cart" (p-click)="addToCart()"> </po-button> -->
+  <po-button class="po-md-3" p-label="Expand all detail" (p-click)="expandAll()"> </po-button>
+  <po-button class="po-md-3" p-label="Collapse all detail" (p-click)="collapseAll()"> </po-button>
+</div>
+
+<po-modal p-click-out="true" p-size="sm" p-title="{{ detail?.cliente }}">
+  <po-info class="po-sm-4" p-label="Limite Crédito" [p-value]="detail?.value"> </po-info>
+  <po-info class="po-sm-4" p-label="Primeira Compra" [p-value]="detail?.date"> </po-info>
+  <po-info class="po-sm-4" p-label="Ultima Compra" [p-value]="detail?.returnDate"> </po-info>
+  <po-info class="po-sm-4" p-label="Maior Atraso" p-value="10"> </po-info>
+  <po-info class="po-sm-4" p-label="Média de Atraso" p-value="1"> </po-info>
+  <po-info class="po-sm-4" p-label="Grau de Risco" p-value="A"> </po-info>
+</po-modal>
+</po-page-default> 
+
+

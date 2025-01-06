@@ -1,0 +1,75 @@
+<po-page-default p-title="Formação de orçamento">
+    <p class="po-mb-4 po-ml-1">Possibilidade de expansão e adição de ações:</p>
+    <div class="po-row"> 
+    
+      <po-stepper #stepper class="po-lg-4 po-md-6">
+        <po-step p-label="Produtos">
+          <p class="po-font-subtitle">Por favor, selecione os produtos:</p>
+
+          <po-tree-view 
+            [p-selectable]="true"
+
+            [p-items]="itemsTree"
+            (p-unselected)="removeItem($event)"
+          >
+          </po-tree-view>
+        </po-step>
+
+        <po-step p-label="Valores" [p-can-active-next-step]="isConfirmed.bind(this)">
+          <po-widget
+            p-primary-label="Gerar orçamento"
+            p-title="Revisão dos valores"
+            [p-disabled]="itemsListSelected.length < 1"
+            (p-primary-action)="checkOut()"
+          >
+            <po-table
+              p-striped
+              [p-columns]="columnsItemsSelected"
+              [p-items]="itemsListSelected"
+              [p-hide-table-search]="false"
+            >
+            </po-table>
+          </po-widget>
+        </po-step>
+
+        <po-step p-label="Confirmação">
+          <po-widget>
+            <div class="po-row po-font-display">
+              <p>Orçamento finalizado</p>
+              <po-icon p-icon="po-icon ph ph-check"></po-icon>
+            </div>
+          </po-widget>
+        </po-step>
+      </po-stepper>
+
+    <div 
+    class="tamDivPrd"
+
+    >
+
+    <po-table
+    class="tamDivPrd"
+  p-container="true"
+  [p-height]="800"
+  [p-hide-batch-actions]="false"
+  [p-hide-table-search]="false"
+  [p-selectable]="true"
+  [p-sort]="true"
+  [p-striped]="true"
+  [p-actions]="actions"
+  [p-columns]="columns"
+  [p-items]="items"
+  [p-max-columns]="7"
+  (p-collapsed)="onCollapseDetail()"
+  (p-expanded)="onExpandDetail()"
+  (p-selected)="sumTotal($event)"
+  (p-unselected)="decreaseTotal($event)"
+  (p-change-visible-columns)="changeColumnVisible($event)"
+  (p-restore-column-manager)="restoreColumn()"
+  (p-delete-items)="deleteItems($event)"
+>
+</po-table>
+</div>
+
+  </div>
+</po-page-default>
