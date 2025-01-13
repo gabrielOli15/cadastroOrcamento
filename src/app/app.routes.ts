@@ -5,8 +5,10 @@ import { PainelComponent } from './painel/painel.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'index.html', pathMatch: 'full' },
   { path: 'index.html', component: PainelComponent },
-  { path: 'painel', loadChildren: () => import('./painel/painel.module').then(m => m.PainelModule) },
-  { path: 'cadastro', loadChildren: () => import('./cadastra-orcamento/cadastra-orcamento.module').then(m => m.CadastraOrcamentoModule) }
+  { path: 'painel', loadComponent: () => import('./painel/painel.component').then(mod => mod.PainelComponent) },
+  { path: 'estrutura', loadComponent: () => import('./estrutura-orcamento/estrutura-orcamento.component').then(mod => mod.EstruturaOrcamentoComponent) },
+  { path: 'solicitar', loadComponent: () => import('./solicita-orcamento/solicita-orcamento.component').then(mod => mod.SolicitaOrcamentoComponent) },
+  { path: 'cadastro', loadComponent: () => import('./cadastra-orcamento/cadastra-orcamento.component').then(mod => mod.CadastraOrcamentoComponent) }
 ];
 
 @NgModule({

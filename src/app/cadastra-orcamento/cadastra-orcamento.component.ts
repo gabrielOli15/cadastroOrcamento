@@ -1,17 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters } from '@po-ui/ng-templates';
-import {
-  PoTableLiterals,  PoPageAction, PoDialogService, PoNotificationService,
-  PoTableColumn, PoSelectOption, PoModalComponent,
-  PoTableComponent, PoModalAction, PoDynamicFormField, PoDynamicFormFieldChanged, 
-  PoDynamicFormValidation, PoDynamicFormFieldValidation, PoProgressStatus, PoMultiselectOption,
-  PoChartType, PoChartOptions, PoChartSerie, PoBreadcrumb, PoDynamicViewField,
-  PoTableAction, PoTreeViewItem,PoStepperComponent 
-} from '@po-ui/ng-components';
 import { CadastraOrcamentoService } from './shared/Service/cadastra-orcamento.service';
+import { PoChartOptions, PoChartSerie, PoChartType, PoDialogService, PoModalComponent, 
+  PoNotificationService, PoStepperComponent, PoTableAction, PoTableColumn, 
+  PoTableComponent, PoTreeViewItem, SharedModule } 
+  from '../shared/shared.module';
 
 @Component({
+  standalone: true,
+  imports: [SharedModule],
   selector: 'app-cadastra-orcamento',
   templateUrl: './cadastra-orcamento.component.html',
   styleUrl: './cadastra-orcamento.component.css'

@@ -1,1 +1,204 @@
-/* You can add global styles to this file, and also import other style files */
+
+po-button[p-kind="primary"] {
+    --color: #24224c;
+    --color-pressed: #24224c;
+    --border-color: #fff100;
+    --border-radius: 25px;
+    --text-color: #fff100;
+}
+
+po-button[p-kind="secondary"] {
+    --color: #24224c;
+    --border-color-hover: #fff100;
+    --background-hover: #24224c;
+    --background-pressed: #29275b;
+    --border-radius: 25px;
+}
+
+po-button[p-kind="tertiary"] {
+    --color: #24224c;
+    --border-color-hover: #fff100;
+    --background-hover: #24224c;
+    --background-pressed: #29275b;
+    --border-radius: 25px;
+}
+
+po-switch {
+    --color-checked: #24224c;
+    --track-checked: #fff100;
+    --track-unchecked: #24224c;
+}
+
+po-radio {
+    --color-checked: #24224c;
+    --shadow-color-hover: #fff100;
+}
+
+po-disclaimer {
+    --color: #24225c;
+    --color-icon: #ffffff;
+    --text-color: #ffffff;
+    --color-hover: #fff100;
+}
+
+input.po-input {
+    --color: #24224c;
+    --color-hover: #fff100;
+    --text-color: #24224c;
+    --background-hover: #fffeee;
+}
+
+po-select {
+    --color: #000000;
+    --color-hover: #fff100;
+    --background: #ffffff;
+    --background-hover: #fffeee;
+    --text-color: #24224c;
+}
+
+po-textarea {
+    --color-hover: #fff100;
+    --background-hover: #fffeee;
+}
+
+po-dropdown {
+    --color-hover: #24224c;
+    --background-hover: #fffeee;
+}
+
+input.po-datepicker {
+    --text-color: #24224c;
+    --color-hover: #fff100;
+}
+
+po-datepicker po-button[p-kind="tertiary"] {
+    --background-hover: #24224c;
+    --border-color-hover: #fff100;
+}
+
+po-link {
+    --text-color-visited: #fff100;
+    --text-color: #24224c;
+    --outline-color-focused: #24224c;
+}
+
+.po-tooltip {
+    --text-color: #24224c;
+    --color: #fff100;
+    --border-radius: 25px;
+}
+
+po-modal {
+    --border-color: #24224c;
+    --color-divider: #24224c;
+}
+
+po-popup po-item-list {
+    --background-hover: #fffeee;
+}
+
+po-checkbox {
+    --color-checked: #24224c;
+    --shadow-color-hover: #fff100;
+}
+
+po-multiselect {
+    --color: #24224c;
+    --color-hover: #fff100;
+    --background-hover: #fffeee;
+}
+
+po-combo {
+    --color-hover: #fff100;
+    --background-hover: #fffeee;
+    --text-color: #24224c;
+}
+
+po-accordion {
+    --background-hover: #fffeee;
+    --color: #24224c;
+    --color-pressed: #24224c;
+}
+
+po-breadcrumb {
+    --color-icon: #24224c;
+    --color-current-page: #24224c;
+    --color: #24224c;
+}
+
+po-tag {
+    --color-info: #fffeee;
+    --text-color-info: #24224c;
+    --color: #fffeee;
+    --text-color: #24224c;
+    --color-hover: #fff100;
+}
+
+po-table {
+    --color-info: #fffeee;
+    --text-color-info: #24224c;
+    --color: #24224c;
+    --text-color: #24224c;
+    --color-hover: #fff100;
+    --color-line: #24224c;
+    --background-color-selected: #fffaaa;
+    --color-hover: #24224c;
+    --background-color-hover: #fffaaa;
+    --background-striped-color: #fffeee;
+    --background-color-headline: #fff100;
+    border-radius: 25px;
+}
+
+po-search {
+    --border-radius: 25px; 
+    --text-color: #24224c;
+    --color-icon-read: #24224c;
+    --color-icon: #fff100;
+    --color-hover: #fff100;
+    --background-hover: #fffeee;
+  }
+
+po-menu {
+    --border-radius: 25px;
+    --color: #24224c;
+}
+
+po-menu-item { 
+    --border-radius: 25px;
+    --color: #24224c;
+    --color-hover: #fff100;
+    --background-color-hover: #24224c;
+    --background-color-actived: #24224c;
+    --color-actived: #24224c;
+    --outline-color-focused: transparent;
+    --background-color-pressed: #045b8f;
+  }
+  
+po-widget {
+    --border-radius: 25px;
+    --border-color: #24224c;
+    --background-selected: var(--color-brand-01-lightest);
+    --border-color-selected: #24224c;
+    --border-color-hover: #24224c;
+    --shadow-hover: #24224c;
+}
+
+po-container {
+    --border-radius: 25px;
+}
+
+.po-toolbar-title {
+    color: #24224c;
+}
+
+.po-page-header-title-container .po-page-header-title {
+    color: #24224c;
+}
+
+:root {
+    --color-stepper-circle-active: #fff100;
+    --color-stepper-circle-default: #24224c;
+    --color-stepper-circle-disabled: var(--color-neutral-light-30);
+    --color-stepper-circle-error: var(--color-feedback-negative-base);
+    --outline-color-focused: transparent;
+}   
