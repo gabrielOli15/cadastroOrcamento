@@ -1,7 +1,9 @@
+<po-navbar
+    p-logo="../../assets/logo.png"  
+    p-logo-alt="string"
+    [p-shadow]="hideRememberUser" >
+</po-navbar>
 <div class="po-wrapper"> 
-    <app-toolbar></app-toolbar>
-    <po-menu [p-menus]="menus" [p-collapsed]="true" 
-    p-logo="../../assets/logo.png"   
-    ></po-menu>
+    <po-menu [p-menus]="menus" [p-collapsed]="true"  p-logo="../../assets/logo.png"></po-menu>
     <router-outlet></router-outlet>
 </div>

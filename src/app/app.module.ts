@@ -13,6 +13,7 @@ import { PoStorageService, PoStorageModule } from '@po-ui/ng-storage';
 import { PathLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common'; 
 import { LoginService } from './login/shared/service/login.service';
 import { AuthGuardService } from './login/shared/service/auth-guard.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AuthGuardService } from './login/shared/service/auth-guard.service';
       storeName: 'mystore',
       driverOrder: ['localstorage']
     }),
+    BrowserAnimationsModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: PathLocationStrategy},

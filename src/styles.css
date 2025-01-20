@@ -5,7 +5,7 @@ po-button[p-kind="primary"] {
     --color-pressed: #24224c;
     --border-color: #24224c;
     --text-color: #fff100;  
-    --background-hover: #ffffff;
+    --background-hover: #045b8f;
 }
 
 po-button[p-kind="secondary"] {
@@ -215,6 +215,11 @@ po-widget {
     color: #24224c;
 }
 
+.po-page-background-main-logo-image {
+    max-height: max-content;
+    max-width: max-content;
+}
+
 @font-face {
     font-family: 'TTSupermolotNeue';
     src: url('./assets/fonts/TTSupermolotNeue/TTSupermolotNeue-Regular.ttf');
@@ -243,6 +248,9 @@ po-widget {
     --font-family-theme-extra-light: TTSupermolotNeueCondensed;
 
     --font-family-heading: TTSupermolotNeue;
+
+    --color-hover: #fff100;
+    --color-action-hover: #045b8f;
 }
 
   

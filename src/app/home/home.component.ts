@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PoMenuItem } from '@po-ui/ng-components';
+import { PoMenuItem, PoNavbarIconAction, PoThemeModule } from '@po-ui/ng-components';
 import { ProAppConfigService } from '@totvs/protheus-lib-core';
 import { PoStorageService } from '@po-ui/ng-storage';
+import { PoNavbarLiterals } from '@po-ui/ng-components/lib/components/po-navbar/interfaces/po-navbar-literals.interface';
+
 
 @Component({
   selector: 'app-home',
@@ -10,6 +12,8 @@ import { PoStorageService } from '@po-ui/ng-storage';
 })
 export class HomeComponent {
   
+  hideRememberUser: boolean = true;    
+
   constructor (
     private router: Router,
     private storage: PoStorageService,
