@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core'; 
 import { RouterModule, Routes } from '@angular/router';
-import { PainelComponent } from './painel/painel.component'; 
+import { AuthGuardService } from './login/shared/service/auth-guard.service';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'index.html', pathMatch: 'full' },
-  { path: 'index.html', component: PainelComponent },
-  { path: 'painel', loadComponent: () => import('./painel/painel.component').then(mod => mod.PainelComponent) },
-  { path: 'estrutura', loadComponent: () => import('./estrutura-orcamento/estrutura-orcamento.component').then(mod => mod.EstruturaOrcamentoComponent) },
-  { path: 'solicitar', loadComponent: () => import('./solicita-orcamento/solicita-orcamento.component').then(mod => mod.SolicitaOrcamentoComponent) },
-  { path: 'cadastro', loadComponent: () => import('./cadastra-orcamento/cadastra-orcamento.component').then(mod => mod.CadastraOrcamentoComponent) }
+  { path: '', redirectTo: '/orcamentos', pathMatch: 'full' },
+  { path: 'orcamentos', canActivate: [AuthGuardService], loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+  { path: 'login', loadComponent: () => import('./login/login.component').then(mod => mod.LoginComponent) },
+  { path: '**', redirectTo: '/orcamentos', pathMatch: 'full'} 
 ];
 
 @NgModule({

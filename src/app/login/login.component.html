@@ -1,4 +1,10 @@
 <po-page-login
-p-logo="../../assets/logo.png"  
-p-background="../../assets/empresa_home.png"  
-></po-page-login>
+    p-product-name="Portal de orçamentos Cardall"
+    p-logo="../../assets/logocompleto.png"  
+    p-background="../../assets/empresa_home.png"  
+    [p-hide-remember-user]="hideRememberUser"
+    (p-login-submit)="loginSubmit($event)"
+    [p-literals]="customLiterals"
+    [p-languages]="language"
+    >
+</po-page-login>

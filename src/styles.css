@@ -1,10 +1,11 @@
 
+
 po-button[p-kind="primary"] {
     --color: #24224c;
     --color-pressed: #24224c;
-    --border-color: #fff100;
-    --border-radius: 25px;
-    --text-color: #fff100;
+    --border-color: #24224c;
+    --text-color: #fff100;  
+    --background-hover: #ffffff;
 }
 
 po-button[p-kind="secondary"] {
@@ -12,7 +13,6 @@ po-button[p-kind="secondary"] {
     --border-color-hover: #fff100;
     --background-hover: #24224c;
     --background-pressed: #29275b;
-    --border-radius: 25px;
 }
 
 po-button[p-kind="tertiary"] {
@@ -20,7 +20,7 @@ po-button[p-kind="tertiary"] {
     --border-color-hover: #fff100;
     --background-hover: #24224c;
     --background-pressed: #29275b;
-    --border-radius: 25px;
+    
 }
 
 po-switch {
@@ -85,7 +85,15 @@ po-link {
 .po-tooltip {
     --text-color: #24224c;
     --color: #fff100;
-    --border-radius: 25px;
+    
+    clip-path: polygon(
+        0 40%,
+        15% 0,
+        100% 0,
+        100% 60%,
+        85% 100%,
+        0% 100%
+        ); 
 }
 
 po-modal {
@@ -150,7 +158,7 @@ po-table {
 }
 
 po-search {
-    --border-radius: 25px; 
+     
     --text-color: #24224c;
     --color-icon-read: #24224c;
     --color-icon: #fff100;
@@ -159,32 +167,28 @@ po-search {
   }
 
 po-menu {
-    --border-radius: 25px;
+    
     --color: #24224c;
 }
 
 po-menu-item { 
-    --border-radius: 25px;
+    
     --color: #24224c;
     --color-hover: #fff100;
     --background-color-hover: #24224c;
     --background-color-actived: #24224c;
-    --color-actived: #24224c;
+    --color-actived: #fff100;
     --outline-color-focused: transparent;
     --background-color-pressed: #045b8f;
-  }
+}
   
 po-widget {
-    --border-radius: 25px;
+    
     --border-color: #24224c;
     --background-selected: var(--color-brand-01-lightest);
     --border-color-selected: #24224c;
     --border-color-hover: #24224c;
     --shadow-hover: #24224c;
-}
-
-po-container {
-    --border-radius: 25px;
 }
 
 .po-toolbar-title {
@@ -202,3 +206,43 @@ po-container {
     --color-stepper-circle-error: var(--color-feedback-negative-base);
     --outline-color-focused: transparent;
 }   
+
+.po-page-login-header-welcome {
+    color: #24224c;
+} 
+
+.po-field-icon:not(.po-field-icon-disabled) {
+    color: #24224c;
+}
+
+@font-face {
+    font-family: 'TTSupermolotNeue';
+    src: url('./assets/fonts/TTSupermolotNeue/TTSupermolotNeue-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TTSupermolotNeueCondensed';
+    src: url('./assets/fonts/TTSupermolotNeue/TTSupermolotNeueCondensed-Med.ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: condensed;
+}
+
+@font-face {
+    font-family: 'TTSupermolotNeue-Bold';
+    src: url('./assets/fonts/TTSupermolotNeue/TTSupermolotNeue-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+}
+
+:root {
+    --font-family-theme: TTSupermolotNeue;
+    --font-family-theme-bold: TTSupermolotNeue-Bold;
+    --font-family-theme-extra-light: TTSupermolotNeueCondensed;
+
+    --font-family-heading: TTSupermolotNeue;
+}
+
+  
