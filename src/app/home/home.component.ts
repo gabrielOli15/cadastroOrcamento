@@ -24,7 +24,7 @@ export class HomeComponent {
 
   readonly menus: Array<PoMenuItem> = [
     { label: 'Painel', link: './painel', icon: 'ph ph-ranking', shortLabel: 'Painel' }, // , action: () => this.router.navigate(['painel'])
-    { label: 'Estrutura de orçamentos', link: './estrutura', icon: 'ph ph-tree-view', shortLabel: 'Estruturas' }, // action: () => this.router.navigate(['estrutura']), 
+    { label: 'Estruturas de orçamentos', link: './estrutura', icon: 'ph ph-tree-view', shortLabel: 'Estruturas' }, // action: () => this.router.navigate(['estrutura']), 
     { label: 'Solicitar orçamento', link: './solicitar', icon: 'ph ph-receipt', shortLabel: 'Solicitar' }, // , action: () => this.router.navigate(['solicitar'])
     { label: 'Formação de orçamento', link: './cadastro', icon: 'ph ph-layout', shortLabel: 'Orçamentos' }, // , action: () => this.router.navigate(['cadastro'])
     { label: 'Sair', action: () => this.closeApp(), icon: 'ph ph-sign-out', shortLabel: 'Sair' }

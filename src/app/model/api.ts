@@ -1,7 +1,7 @@
 
 export class api {
-    USER: string = 'REST:GTS@2024';
-    URL: string = 'http://gtsdo142364.protheus.cloudtotvs.com.br:4050/rest'     
+    USER: string = 'TOTVS:t0tvs';
+    URL: string = 'http://192.168.2.235:72/rest'     
     
     constructor(obj = {}) {
         Object.assign(this, obj);

@@ -1,4 +1,11 @@
 
+/* Tema personalizado  */
+
+.tsc-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 po-button[p-kind="primary"] {
     --color: #24224c;
@@ -19,8 +26,24 @@ po-button[p-kind="tertiary"] {
     --color: #24224c;
     --border-color-hover: #fff100;
     --background-hover: #24224c;
-    --background-pressed: #29275b;
+    --background-pressed: #24224c;
     
+}
+
+.po-dropdown-button {
+    --color: #24224c;
+    --color-pressed: #24224c;
+    --border-color: #24224c;
+    --text-color: #fff100;  
+    --background-hover: #24224c;
+}
+
+.po-dropdown-button-open, .po-dropdown-button-open:hover {
+    background-color: #24224c;
+}
+
+.po-popup .po-item-list__action {
+    color:#24224c;
 }
 
 po-switch {
@@ -46,6 +69,7 @@ input.po-input {
     --color-hover: #fff100;
     --text-color: #24224c;
     --background-hover: #fffeee;
+    background-color: #ffffff;
 }
 
 po-select {
@@ -105,15 +129,28 @@ po-popup po-item-list {
     --background-hover: #fffeee;
 }
 
+po-item-list { 
+    --background-hover: #fffeee; 
+    --outline-color-focused: #24224c; 
+    --background-pressed: #fff100; 
+    --color-option: #24224c; 
+    --background-selected: #fffaaa;
+}
+
 po-checkbox {
     --color-checked: #24224c;
-    --shadow-color-hover: #fff100;
+    --shadow-color-hover: #fffaaa;
+    --color-hover: #fff100;
+    --border-color: #24224c;
+    --outline-color-focused: #fff100;
 }
 
 po-multiselect {
     --color: #24224c;
     --color-hover: #fff100;
     --background-hover: #fffeee;
+    background-color: #ffffff;
+    --background: #ffffff;
 }
 
 po-combo {
@@ -126,6 +163,13 @@ po-accordion {
     --background-hover: #fffeee;
     --color: #24224c;
     --color-pressed: #24224c;
+    --color-hover: #24224c;
+
+    --background-pressed:#fffeee;
+    --color-pressed:#fff100;
+
+    --color-focus:#24224c;
+    --outline-color-focused:transparent;
 }
 
 po-breadcrumb {
@@ -140,6 +184,8 @@ po-tag {
     --color: #fffeee;
     --text-color: #24224c;
     --color-hover: #fff100;
+    --border-color: #fffaaa;
+    --color-icon: #24224c;
 }
 
 po-table {
@@ -147,18 +193,51 @@ po-table {
     --text-color-info: #24224c;
     --color: #24224c;
     --text-color: #24224c;
-    --color-hover: #fff100;
     --color-line: #24224c;
     --background-color-selected: #fffaaa;
-    --color-hover: #24224c;
     --background-color-hover: #fffaaa;
     --background-striped-color: #fffeee;
     --background-color-headline: #fff100;
-    border-radius: 25px;
+    
+    --color-hover: #24224c; 
+ 
+  
+    --background-color-hover: #fff100; 
+
+    --outline-color-focused: #24224c; 
+ 
+}
+
+.po-table-row:hover td{
+    background: #fffccc;
+}
+
+.po-accordion-manager-button {
+    background-color: #fff100;
+    color: #24224c;
+    min-height: 3.40em;
+}
+
+po-accordion-manager {
+    --background-color: #fff100;
+    --color: #24224c; 
+    --background-pressed: #fffccc;
+    --color-pressed: var(--color-action-pressed);
+
+    --color-focus: #24224c;
+    --outline-color-focused: transparent;
+
+}
+
+.po-accordion-manager-icon {
+    color: #24224c;
+}
+
+.po-accordion-item-header-button {
+    min-height: 48px;
 }
 
 po-search {
-     
     --text-color: #24224c;
     --color-icon-read: #24224c;
     --color-icon: #fff100;
@@ -167,7 +246,6 @@ po-search {
   }
 
 po-menu {
-    
     --color: #24224c;
 }
 
@@ -218,6 +296,26 @@ po-widget {
 .po-page-background-main-logo-image {
     max-height: max-content;
     max-width: max-content;
+    top: 100px;
+}
+
+div.po-lookup-filter-content input.po-input, 
+    input.po-input,
+    po-datepicker, 
+    po-datepicker-range, 
+    po-decimal, 
+    po-email, 
+    po-input, 
+    po-login, 
+    po-lookup, 
+    po-number, 
+    po-password, 
+    po-url,
+    po-select,
+    po-textarea,
+    po-dropdown {
+    --outline-color-focused: transparent;
+    --color-focused: #fff100;
 }
 
 @font-face {
@@ -249,8 +347,26 @@ po-widget {
 
     --font-family-heading: TTSupermolotNeue;
 
+    --background: #ffffff;
     --color-hover: #fff100;
     --color-action-hover: #045b8f;
+
+      /** Tree View Item */
+    --color-tree-view-item-border-bottom-color: #24224c;
+
+    /** Tree View Item Header */
+    --color-tree-view-item-header-button-color: #24224c;
+    --color-tree-view-item-header-button-focus: #24224c;
+    --color-tree-view-item-header-label-text-color: #24224c;
+
+    --color-chart-legend-wrapper-scrollbar: #fff100;
+    --color-gauge-legend-scrollbar: #fff100;
+    --color-page-content-background-color-scrollbar: #fff100;
+    --color-popover-background-color-scrollbar: #fff100;
+    --color-rich-text-background-color-scrollbar: #fff100;
+    --color-rich-text-background-color-scrollbar: #fff100;
+    --color-slide-background-color-scrollbar: #fff100;
+    --color-table-column-manager-body-color-background-scrollbar: #fff100;
+
 }
 
-  

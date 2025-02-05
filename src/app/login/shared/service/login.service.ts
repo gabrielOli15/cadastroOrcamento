@@ -14,9 +14,8 @@ const headers = new HttpHeaders()
 })
 export class LoginService {
 
-  //extends GenericService<User> 
   path = 'auth';
-  ApiRest = apiData.URL + '/gts_pflogin/get?'; //Endereço da nossa API responsável por lista os fornecedores
+  ApiRest = apiData.URL + '/cardallapis/login?';
 
   constructor(
     private http: HttpClient,
@@ -24,8 +23,8 @@ export class LoginService {
   ) {}
 
   //Método responsável por buscar e listar nossos fornecedores
-  getLogin(cemail: string, csenha: string): Observable<any> {
-    return of({ret: true, codForn: 'teste', lojaForn: 'teste'});  //this.http.get(this.ApiRest + 'cemail='+cemail+'&csenha='+csenha,{headers: headers});
+  getLogin(user: string, password: string): Observable<any> {
+    return this.http.get(this.ApiRest + 'user='+user+'&password='+password,{headers: headers}); 
   }
 
   async isLoggedIn(): Promise<Date> {   

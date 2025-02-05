@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PoModule } from '@po-ui/ng-components';
 import { PoTemplatesModule } from '@po-ui/ng-templates';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { PoTableModule } from '@po-ui/ng-components';
 export * from '@po-ui/ng-components'; 
 
@@ -17,6 +17,7 @@ export * from '@po-ui/ng-components';
     PoModule,
     PoTemplatesModule,
     FormsModule,
+    NgForm,
     PoTableModule
   ]
 })

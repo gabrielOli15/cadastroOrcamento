@@ -1,19 +1,32 @@
-
-<po-page-default
-    p-title="Estruturas de Orçamentos">
-    <po-button 
-        p-kind="primary"
-        p-label="CARDALL" 
-        p-type="PoButtonType">
-    </po-button>
-    <po-button 
-        p-kind="secondary"
-        p-label="CARDALL" 
-        p-type="PoButtonType">
-    </po-button>
-    <po-button 
-        p-kind="tertiary"
-        p-label="CARDALL" 
-        p-type="PoButtonType">
-    </po-button>
-</po-page-default>>
+<po-page-dynamic-search
+  p-title="Estruturas de Orçamentos"
+  [p-breadcrumb]="breadcrumb"
+  [p-hide-close-disclaimers]="hideCloseDisclaimers"
+  [p-filters]="filters"
+  [p-literals]="literals"
+  [p-load]="onLoadFields.bind(this)"
+  [p-quick-search-width]="quickSearchWidth"
+  [p-hide-remove-all-disclaimer]="hideRemoveAllDisclaimer"
+  (p-change-disclaimers)="onChangeDisclaimers($event)"
+  (p-quick-search)="onQuickSearch($event)"
+  (p-advanced-search)="onAdvancedSearch($event)"
+  [p-quick-search-width]="3"
+  [p-actions]="actions"
+  >
+<po-switch 
+class="po-md-12"
+name="switch" 
+p-label="Estrutura" 
+[(ngModel)]="tipoEstrutura"
+p-label-off="Especial"
+p-label-on="Padrão">
+</po-switch>
+  <po-table
+    [p-hide-batch-actions]="true"
+    [p-selectable]="true"
+    [p-sort]="true"
+    [p-columns]="estruturasColumns"
+    [p-items]="estruturas.items"
+  >
+  </po-table>
+</po-page-dynamic-search>
