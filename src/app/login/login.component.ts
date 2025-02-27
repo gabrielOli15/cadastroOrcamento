@@ -31,12 +31,11 @@ export class LoginComponent {
 
   loginSubmit(formData: PoPageLogin) {
     const user = Object.assign({ username: formData.login, password: formData.password }); 
-
+    console.log("loginSubmit")
     this.loginService.getLogin(formData.login, formData.password).subscribe(response => {
       if (response.nome) {      
 
         // valida bloqueado
-        console.log(response.bloqueado)
         if (response.bloqueado == '1') {
           const poNotification: PoNotification = {
             message: 'usuário bloqueado, contate o administrador.',

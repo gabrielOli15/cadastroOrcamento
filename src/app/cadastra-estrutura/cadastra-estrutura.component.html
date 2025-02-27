@@ -20,6 +20,15 @@
                   p-label-off="Especial"
                   p-label-on="Padrão">
                 </po-switch>
+                <po-switch 
+                  class="po-md-12"
+                  name="switch" 
+                  p-label="Estrutura Especial" 
+                  [p-disabled]="tipoEstrutura ? true : false"
+                  [(ngModel)]="tipoEstEspecial"
+                  p-label-off="Recuperação de Calor"
+                  p-label-on="Genérica">
+                </po-switch>
                 <po-select
                   class="po-md-3"
                   name="tipoEstrutura"
@@ -33,7 +42,19 @@
                   p-readonly="false"
                   p-auto-focus="false">
                 </po-select>
-                <po-input
+                <po-select
+                  class="po-md-3"
+                  name="tipoEstrutura"
+                  [p-disabled]="!tipoEstrutura && tipoEstEspecial ? false : true"
+                  p-label="Grupo"
+                  [p-options]="grupoEstrutura"
+                  p-required="true"
+                  p-optional="false"
+                  p-placeholder=""
+                  p-readonly="false"
+                  p-auto-focus="false">
+                </po-select>
+                <!-- <po-input
                   class="po-md-2"
                   name="codigoEstrutura"
                   [(ngModel)]="codigoEstrutura"
@@ -43,7 +64,7 @@
                   p-required="true"
                   p-readonly="true"
                   p-auto-focus="true">
-                </po-input>
+                </po-input> -->
                 <po-input
                   class="po-md-6"
                   name="descricao"
@@ -60,7 +81,7 @@
                   name="areaInterna"
                   [(ngModel)]="areaInterna"
                   p-label="Área Interna"
-                  [p-optional]="false"
+                  [p-optional]="true"
                   p-placeholder=""
                   p-required="true"
                   p-readonly="false"
@@ -71,7 +92,7 @@
                   name="areaExterna"
                   [(ngModel)]="areaExterna"
                   p-label="Área Externa"
-                  [p-optional]="false"
+                  [p-optional]="true"
                   p-placeholder=""
                   p-required="true"
                   p-readonly="false"
@@ -101,13 +122,31 @@
                 p-type="default"
                 (p-click)="adicionarEstrutura()">
               </po-button>
+              <po-button 
+                p-icon="ph ph-plus"
+                p-label="Buscar"
+                p-small="false"
+                p-type="default"
+                (p-click)="details()">
+              </po-button>
             </div>
             <po-accordion
               #accordion 
-              [p-show-manager-accordion]="true">
+              [p-show-manager-accordion]="true"
+              >
               <po-accordion-item 
+                class="po-md-6"
                 *ngFor="let estrutura of estruturas; let i = index" 
-                p-label="Estrutura {{ i+1 }}">
+                p-label="Estrutura {{ i+1 }}"
+                #accordionItem>
+                <div class="finalLinha">
+                  <po-tag
+                    p-color="color-0{{ i+1 }}"
+                    p-value="{{i+1}}" 
+                    p-text-color="white"
+                    >
+                  </po-tag>
+                </div>
                 <po-select
                   class="po-md-6"
                   name="produto"
@@ -124,8 +163,8 @@
                 <po-tree-view
                   [p-selectable]="true"
                   [p-items]="produtosTree[i]"
-                  (p-selected)="addItem($event)"
-                  (p-unselected)="removeItem($event)"
+                  (p-selected)="selecionarTreeIrem($event)"
+                  (p-unselected)="removerTreeItem($event)"
                   [p-max-level]="5">
                 </po-tree-view>
                 <po-divider></po-divider>
@@ -136,13 +175,12 @@
                   (p-change)="changeservico($event)">
                 </po-multiselect>
                 <po-widget
-                  p-title="Serviços do produto"
-                  (p-primary-action)="checkOut()"
-                  *ngIf="itemsListSelected.length > 0">
+                  p-title="Serviços da estrutura {{i+1}}"
+                  (p-primary-action)="checkOut()">
                   <po-table
                     p-striped
-                    [p-columns]="columnsItemsSelected"
-                    [p-items]="itemsListSelected"
+                    [p-columns]="colunasServicos"
+                    [p-items]="itemsServicos[i]"
                     [p-hide-table-search]="true"
                     [p-hide-columns-manager]="true">
                   </po-table>
@@ -158,39 +196,99 @@
               </po-accordion-item>
             </po-accordion> 
           </div>
-          <div *ngIf="produtosEstrutura.length > 0">
+          <div class="po-lg-8">
+            <div class="po-table-actions">
+              <div class="po-table-actions-batch-actions">
+                  <po-button 
+                    p-icon="ph ph-trash"
+                    p-label=" "
+                    p-danger="true"
+                    [p-disabled]="acaoBotoesTable"
+                    (p-click)="deletarProdutoEstrutura()"
+                    >
+                  </po-button>
+                  <po-button 
+                    p-icon="ph ph-copy"
+                    p-label=" "
+                    [p-disabled]="acaoBotoesTable"
+                    (p-click)="copiarEstrutura()"
+                    >
+                  </po-button>
+                  <po-button 
+                    p-icon="ph ph-stack-plus"
+                    p-label=" "
+                    [p-disabled]="this.produtosEstruturaCopiar.length > 0 ? false : true"
+                    (p-click)="colarEstrutura()"
+                    >
+                  </po-button>
+                  <po-button 
+                    p-icon="ph ph-paint-bucket"
+                    p-label=" "
+                    [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
+                    (p-click)="gerarMaoDeObra()">
+                  </po-button>
+                  <po-button 
+                    p-icon="ph ph-wrench"
+                    p-label=" "
+                    [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
+                    (p-click)="gerarMaoDeObra()">
+                  </po-button>
+                  <po-button 
+                    p-icon="ph ph-truck"
+                    p-label="C+S+F"
+                    [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
+                    (p-click)="gerarMaoDeObra()">
+                  </po-button>
+                  <po-button 
+                    p-icon="ph ph-chat-text"
+                    p-label=" "
+                    [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
+                    (p-click)="gerarMaoDeObra()">
+                  </po-button>
+              </div>
+              <po-search
+                p-placeholder="Pesquisar"
+                p-aria-label="teste"
+                name="Po Search"
+                class="po-md-6"
+                [p-items]="produtosEstrutura"
+                [p-filter-select]="listaFiltros"
+                (p-filtered-items-change)="filtrarProdutos($event)"
+                (p-change-model)="VerificarFiltroProdutos($event)"
+              ></po-search>
+            </div>
             <po-table
-              class="po-lg-8"
               p-container="true"
-              [p-height]="700"
+              [p-height]="500"
+              [p-hide-batch-actions]="true"
               [p-hide-columns-manager]="true"
-              [p-hide-batch-actions]="false"
-              [p-hide-table-search]="false"
+              [p-hide-table-search]="true"
               [p-selectable]="true"
               [p-sort]="true"
               [p-actions]="actions"
-              [p-columns]="columns"
-              [p-items]="produtosEstrutura"
+              [p-columns]="columnsProdutosBusca"
+              [p-items]="produtosBusca"
               [p-max-columns]="7"
               (p-collapsed)="onCollapseDetail()"
               (p-expanded)="onExpandDetail()"
-              (p-selected)="sumTotal($event)"
-              (p-unselected)="decreaseTotal($event)"
+              (p-selected)="selecionarProduto($event)"
+              (p-unselected)="deselecionarProduto($event)"
+              (p-all-selected)="selecionarProduto($event)"
+              (p-all-unselected)="deselecionarProduto($event)"
               (p-change-visible-columns)="changeColumnVisible($event)"
-              (p-delete-items)="deleteItems($event)"
-              (click)="onRowClick($event)">
+              (click)="cliqueLinha($event)"
+              [p-infinite-scroll]="true">
             </po-table>
           </div>
         </po-step>
         <po-step p-label="Produtividade" class="tsc-center" [p-can-active-next-step]="isConfirmed.bind(this)">
-          <p class="po-font-subtitle">Revise os totais da estrutura</p>
           <po-widget
+            [p-height]="580"
+            class="po-md-8"
             p-primary-label="Gravar estrutura"
-            p-title="Revisão dos valores"
-            *ngIf="itemsListSelected.length > 0"
+            p-title="Revise os totais da estrutura"
             (p-primary-action)="checkOut()">
             <po-table
-              p-striped
               [p-columns]="columnsItemsSelected"
               [p-items]="itemsListSelected"
               [p-hide-table-search]="true"
@@ -209,4 +307,39 @@
       </po-stepper>
     </div>
     <po-loading-overlay *ngIf="isLoadingPayment" p-text="Loading"> </po-loading-overlay>
+    <po-modal [p-title]="tituloModel" [p-secondary-action]="close">
+      <div class="po-table-actions">
+        <po-search
+          p-placeholder="Pesquisar"
+          p-aria-label="teste"
+          name="Po Search"
+          class="po-md-6"
+          [p-items]="produtosBusca"
+          [p-filter-select]="listaFiltrosBusca"
+          (p-filtered-items-change)="filtrarProdutos($event)"
+          (p-change-model)="VerificarFiltroProdutos($event)"
+        ></po-search>
+      </div>
+      <po-table
+        p-container="true"
+        [p-height]="500"
+        [p-hide-batch-actions]="true"
+        [p-hide-columns-manager]="true"
+        [p-hide-table-search]="true"
+        [p-selectable]="true"
+        [p-sort]="true"
+        [p-columns]="columnsProdutosBusca"
+        [p-items]="produtosBusca"
+        [p-max-columns]="7"
+        (p-collapsed)="onCollapseDetail()"
+        (p-expanded)="onExpandDetail()"
+        (p-selected)="selecionarProduto($event)"
+        (p-unselected)="deselecionarProduto($event)"
+        (p-all-selected)="selecionarProduto($event)"
+        (p-all-unselected)="deselecionarProduto($event)"
+        (p-change-visible-columns)="changeColumnVisible($event)"
+        (click)="cliqueLinha($event)"
+        [p-infinite-scroll]="true">
+      </po-table>
+    </po-modal>
   </po-page-default>

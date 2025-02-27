@@ -24,11 +24,15 @@ export class LoginService {
 
   //Método responsável por buscar e listar nossos fornecedores
   getLogin(user: string, password: string): Observable<any> {
+    console.log("getLogin")
+    console.log(this.ApiRest)
+    console.log(user)
+    console.log(password)
+    console.log(headers)
     return this.http.get(this.ApiRest + 'user='+user+'&password='+password,{headers: headers}); 
   }
 
   async isLoggedIn(): Promise<Date> {   
-    this.storage.get('loggedIn').then( value => console.log(new Date(value)))
     return this.storage.get('loggedIn').then( value => value)
   }
 }

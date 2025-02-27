@@ -30,16 +30,21 @@ po-button[p-kind="tertiary"] {
     
 }
 
-.po-dropdown-button {
+po-dropdown-button {
     --color: #24224c;
-    --color-pressed: #24224c;
-    --border-color: #24224c;
+    --color-pressed: #fff100;
+    --border-color: #fff100;
     --text-color: #fff100;  
-    --background-hover: #24224c;
+    --background-hover: #fff100;
 }
 
 .po-dropdown-button-open, .po-dropdown-button-open:hover {
-    background-color: #24224c;
+    background: #fffccc;
+
+}
+
+.po-item-list__selected {
+    background-color: #fffaaa;
 }
 
 .po-popup .po-item-list__action {
@@ -50,6 +55,22 @@ po-switch {
     --color-checked: #24224c;
     --track-checked: #fff100;
     --track-unchecked: #24224c;
+    --color-unchecked: #fff100;
+    --color-unchecked-hover: #fffaaa;
+    --outline-color-focused: transparent;
+
+    --color-unchecked-disabled: #b2b2b2;
+    --color-checked-disabled: #b2b2b2;
+
+
+}
+
+[aria-checked=true][aria-disabled=true] .po-switch-track {
+    background-color: #b2b2b2;
+}
+
+[aria-disabled=true] .po-switch-track {
+    background-color: #b2b2b2;
 }
 
 po-radio {
@@ -127,6 +148,7 @@ po-modal {
 
 po-popup po-item-list {
     --background-hover: #fffeee;
+    --background-selected: #fffccc;
 }
 
 po-item-list { 
@@ -313,9 +335,14 @@ div.po-lookup-filter-content input.po-input,
     po-url,
     po-select,
     po-textarea,
+    po-search,
     po-dropdown {
     --outline-color-focused: transparent;
     --color-focused: #fff100;
+}
+
+.po-table-actions-batch-actions{
+    gap: 0.5em;
 }
 
 @font-face {
@@ -368,5 +395,37 @@ div.po-lookup-filter-content input.po-input,
     --color-slide-background-color-scrollbar: #fff100;
     --color-table-column-manager-body-color-background-scrollbar: #fff100;
 
+    --color-01: #0c9abe;
+    --color-02: #ab43c8;
+    --color-03: #abc249;
+    --color-04: #c64840;
+    --color-05: #06a6a5;
+    --color-06: #ea9b3e;
+    --color-07: #2c85c8;
+    --color-08: #56b96b;
+    --color-09: #2c43c8;
+    --color-10: #ab4391;
+    --color-11: #5843c8;
+    --color-12: #00b28e;
+
 }
 
+.finalLinha{
+    float: inline-end;
+}
+
+/* Disable text selection for the entire page */
+body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+}
+
+/* Alternatively, disable text selection for specific elements */
+.no-select {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+}
