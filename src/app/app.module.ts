@@ -1,3 +1,4 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ToolbarModule } from './toolbar/toolbar.module';
@@ -14,6 +15,7 @@ import { PathLocationStrategy, LocationStrategy, registerLocaleData } from '@ang
 import { LoginService } from './login/shared/service/login.service';
 import { AuthGuardService } from './login/shared/service/auth-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PoModule } from '@po-ui/ng-components';
 
 @NgModule({
   declarations: [
@@ -33,12 +35,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       storeName: 'mystore',
       driverOrder: ['localstorage']
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PoModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: PathLocationStrategy},
     LoginService,
-    AuthGuardService
+    AuthGuardService,
+    provideHttpClient(withInterceptorsFromDi()),
   ],
   exports: [
     PoStorageModule
