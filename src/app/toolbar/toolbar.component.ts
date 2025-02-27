@@ -1,8 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { PoDialogService, PoNotificationService, PoToolbarAction, PoToolbarProfile } from '@po-ui/ng-components';
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html'
+    selector: 'app-toolbar',
+    templateUrl: './toolbar.component.html',
+    standalone: false
 })
 export class ToolbarComponent implements OnInit { 
 

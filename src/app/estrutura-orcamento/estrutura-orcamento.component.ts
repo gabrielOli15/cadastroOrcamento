@@ -6,11 +6,10 @@ import { EstruturaOrcamentoService } from './shared/service/estrutura-orcamento.
 import { Estruturas } from './shared/interface/pedidos';
 
 @Component({
-  selector: 'app-estrutura-orcamento',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './estrutura-orcamento.component.html',
-  styleUrl: './estrutura-orcamento.component.css'
+    selector: 'app-estrutura-orcamento',
+    imports: [SharedModule],
+    templateUrl: './estrutura-orcamento.component.html',
+    styleUrl: './estrutura-orcamento.component.css'
 })
 export class EstruturaOrcamentoComponent {
   estruturas: Estruturas = {

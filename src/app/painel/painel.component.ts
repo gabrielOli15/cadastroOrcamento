@@ -5,11 +5,10 @@ import { PoChartOptions, PoChartSerie, PoChartType, PoDialogService,
   PoTableComponent, PoTreeViewItem, SharedModule } from '../shared/shared.module';
 
 @Component({
-  standalone: true,
-  imports: [SharedModule],
-  selector: 'app-painel', 
-  templateUrl: './painel.component.html',
-  styleUrl: './painel.component.css'
+    imports: [SharedModule],
+    selector: 'app-painel',
+    templateUrl: './painel.component.html',
+    styleUrl: './painel.component.css'
 })
 export class PainelComponent { 
   readonly itemsTree: Array<PoTreeViewItem> = [

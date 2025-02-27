@@ -11,11 +11,10 @@ import { NgForm } from '@angular/forms';
 import { PoPageDynamicSearchFilters, PoPageDynamicSearchLiterals } from '@po-ui/ng-templates';
 
 @Component({
-  selector: 'app-cadastra-estrutura',
-  standalone: true,
-  imports: [ SharedModule, NgFor, NgIf],
-  templateUrl: './cadastra-estrutura.component.html',
-  styleUrl: './cadastra-estrutura.component.css'
+    selector: 'app-cadastra-estrutura',
+    imports: [SharedModule, NgFor, NgIf],
+    templateUrl: './cadastra-estrutura.component.html',
+    styleUrl: './cadastra-estrutura.component.css'
 })
 export class CadastraEstruturaComponent {
     

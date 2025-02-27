@@ -4,11 +4,10 @@ import { ForceBooleanComponentEnum, PoDynamicFormField, PoDynamicFormFieldChange
   PoDynamicFormValidation, PoNotificationService, SharedModule } from '../shared/shared.module';
 
 @Component({
-  standalone: true,
-  imports: [SharedModule],
-  selector: 'app-solicita-orcamento',
-  templateUrl: './solicita-orcamento.component.html',
-  styleUrl: './solicita-orcamento.component.css'
+    imports: [SharedModule],
+    selector: 'app-solicita-orcamento',
+    templateUrl: './solicita-orcamento.component.html',
+    styleUrl: './solicita-orcamento.component.css'
 })
 export class SolicitaOrcamentoComponent {
   person = {};

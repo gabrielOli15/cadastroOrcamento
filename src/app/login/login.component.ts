@@ -6,11 +6,10 @@ import { PoPageLogin, PoPageLoginLiterals } from '@po-ui/ng-templates';
 import { Router } from '@angular/router';
 
 @Component({
-  standalone: true,
-  imports: [SharedModule],
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+    imports: [SharedModule],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css'
 })
 export class LoginComponent {
 

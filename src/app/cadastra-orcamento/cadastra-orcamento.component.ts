@@ -6,11 +6,10 @@ import { PoChartOptions, PoChartSerie, PoChartType, PoDialogService, PoModalComp
   from '../shared/shared.module';
 
 @Component({
-  standalone: true,
-  imports: [SharedModule],
-  selector: 'app-cadastra-orcamento',
-  templateUrl: './cadastra-orcamento.component.html',
-  styleUrl: './cadastra-orcamento.component.css'
+    imports: [SharedModule],
+    selector: 'app-cadastra-orcamento',
+    templateUrl: './cadastra-orcamento.component.html',
+    styleUrl: './cadastra-orcamento.component.css'
 })
 export class CadastraOrcamentoComponent {
   @ViewChild('stepper', { static: true }) stepper!: PoStepperComponent;
