@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
     styleUrl: './app.component.css',
     standalone: false
 })
-export class AppComponent { 
+export class AppComponent {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  } 
   
 }

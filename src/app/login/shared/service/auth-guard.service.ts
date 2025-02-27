@@ -13,18 +13,21 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    console.log('AuthGuardService.canActivate')
     let lCheckLogin
     lCheckLogin = this.checkLogin();
     return lCheckLogin
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    console.log('AuthGuardService.canActivateChild')
     let lCheckLogin
     lCheckLogin = this.checkLogin();
     return lCheckLogin
   }
 
   async checkLogin() {
+    console.log('AuthGuardService.checkLogin')
     let lCheckLogin 
     let today = new Date()
     lCheckLogin = await this.loginService.isLoggedIn().then(
