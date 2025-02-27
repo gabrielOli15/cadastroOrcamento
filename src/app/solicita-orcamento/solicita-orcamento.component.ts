@@ -5,6 +5,7 @@ import { ForceBooleanComponentEnum, PoDynamicFormField, PoDynamicFormFieldChange
 
 @Component({
     imports: [SharedModule],
+    standalone: true,
     selector: 'app-solicita-orcamento',
     templateUrl: './solicita-orcamento.component.html',
     styleUrl: './solicita-orcamento.component.css'

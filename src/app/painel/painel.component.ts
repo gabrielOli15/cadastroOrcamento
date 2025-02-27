@@ -6,6 +6,7 @@ import { PoChartOptions, PoChartSerie, PoChartType, PoDialogService,
 
 @Component({
     imports: [SharedModule],
+    standalone: true,
     selector: 'app-painel',
     templateUrl: './painel.component.html',
     styleUrl: './painel.component.css'

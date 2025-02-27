@@ -7,6 +7,7 @@ import { Estruturas } from './shared/interface/pedidos';
 
 @Component({
     selector: 'app-estrutura-orcamento',
+    standalone: true,
     imports: [SharedModule],
     templateUrl: './estrutura-orcamento.component.html',
     styleUrl: './estrutura-orcamento.component.css'

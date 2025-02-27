@@ -12,6 +12,7 @@ import { PoPageDynamicSearchFilters, PoPageDynamicSearchLiterals } from '@po-ui/
 
 @Component({
     selector: 'app-cadastra-estrutura',
+    standalone: true,
     imports: [SharedModule, NgFor, NgIf],
     templateUrl: './cadastra-estrutura.component.html',
     styleUrl: './cadastra-estrutura.component.css'

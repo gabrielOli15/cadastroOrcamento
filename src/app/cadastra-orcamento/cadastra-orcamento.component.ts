@@ -7,6 +7,7 @@ import { PoChartOptions, PoChartSerie, PoChartType, PoDialogService, PoModalComp
 
 @Component({
     imports: [SharedModule],
+    standalone: true,
     selector: 'app-cadastra-orcamento',
     templateUrl: './cadastra-orcamento.component.html',
     styleUrl: './cadastra-orcamento.component.css'
