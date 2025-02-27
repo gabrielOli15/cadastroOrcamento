@@ -22,6 +22,7 @@
     "@angular/router": "^19.2.0",
     "@angular/ssr": "^19.2.0",
     "@po-ui/ng-storage": "^18.23.0",
+    "@po-ui/ng-sync": "^2.10.0",
     "@po-ui/ng-templates": "^17.21.0",
     "@totvs/protheus-lib-core": "^17.2.1",
     "add": "^2.0.6",
