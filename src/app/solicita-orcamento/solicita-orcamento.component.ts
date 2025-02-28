@@ -75,7 +75,7 @@ export class SolicitaOrcamentoComponent {
       booleanFalse: 'Inactive',
       formatModel: true
     },
-    { property: 'email', divider: 'CONTACTS', gridColumns: 6, icon: 'ph ph-envelope' },
+    { property: 'email', divider: 'CONTACTS', gridColumns: 6, icon: 'an an-envelope' },
     { property: 'phone', mask: '(99) 99999-9999', gridColumns: 6 },
     { property: 'address', gridColumns: 6 },
     {
@@ -122,7 +122,7 @@ export class SolicitaOrcamentoComponent {
       gridSmColumns: 12,
       decimalsLength: 2,
       thousandMaxlength: 7,
-      icon: 'ph ph-currency-circle-dollar'
+      icon: 'an an-currency-circle-dollar'
     },
     {
       property: 'hobbies',

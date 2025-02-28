@@ -116,14 +116,14 @@
             <!-- <po-button class="po-md-3" p-icon="ICON_CART" p-label="Add items to cart" (p-click)="addToCart()"> </po-button> -->
             <div class="po-table-actions">
               <po-button 
-                p-icon="ph ph-plus"
+                p-icon="an an-plus"
                 p-label="Estrutura"
                 p-small="false"
                 p-kind="default"
                 (p-click)="adicionarEstrutura()">
               </po-button>
               <po-button 
-                p-icon="ph ph-plus"
+                p-icon="an an-plus"
                 p-label="Buscar"
                 p-small="false"
                 p-kind="default"
@@ -188,7 +188,7 @@
                 <po-button 
                   *ngIf="estruturas.length > 1"
                   class="po-table-actions"
-                  p-icon="ph ph-trash"
+                  p-icon="an an-trash"
                   p-label=" "
                   p-danger="true"
                   (p-click)="removerEstrutura(i)">
@@ -200,7 +200,7 @@
             <div class="po-table-actions">
               <div class="po-table-actions-batch-actions">
                   <po-button 
-                    p-icon="ph ph-trash"
+                    p-icon="an an-trash"
                     p-label=" "
                     p-danger="true"
                     [p-disabled]="acaoBotoesTable"
@@ -208,39 +208,39 @@
                     >
                   </po-button>
                   <po-button 
-                    p-icon="ph ph-copy"
+                    p-icon="an an-copy"
                     p-label=" "
                     [p-disabled]="acaoBotoesTable"
                     (p-click)="copiarEstrutura()"
                     >
                   </po-button>
                   <po-button 
-                    p-icon="ph ph-stack-plus"
+                    p-icon="an an-stack-plus"
                     p-label=" "
                     [p-disabled]="this.produtosEstruturaCopiar.length > 0 ? false : true"
                     (p-click)="colarEstrutura()"
                     >
                   </po-button>
                   <po-button 
-                    p-icon="ph ph-paint-bucket"
+                    p-icon="an an-paint-bucket"
                     p-label=" "
                     [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
                     (p-click)="gerarMaoDeObra()">
                   </po-button>
                   <po-button 
-                    p-icon="ph ph-wrench"
+                    p-icon="an an-wrench"
                     p-label=" "
                     [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
                     (p-click)="gerarMaoDeObra()">
                   </po-button>
                   <po-button 
-                    p-icon="ph ph-truck"
+                    p-icon="an an-truck"
                     p-label="C+S+F"
                     [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
                     (p-click)="gerarMaoDeObra()">
                   </po-button>
                   <po-button 
-                    p-icon="ph ph-chat-text"
+                    p-icon="an an-chat-text"
                     p-label=" "
                     [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
                     (p-click)="gerarMaoDeObra()">
@@ -300,7 +300,7 @@
           <po-widget>
             <div class="po-row po-font-display">
               <p>Estrutura finalizada</p>
-              <po-icon p-icon="po-icon ph ph-check"></po-icon>
+              <po-icon p-icon="po-icon an an-check"></po-icon>
             </div>
           </po-widget>
         </po-step>

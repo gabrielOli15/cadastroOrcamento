@@ -38,10 +38,30 @@ po-dropdown-button {
     --background-hover: #fff100;
 }
 
+po-dropdown {
+    --color: #24224c;
+
+    /* hover */
+    --color-hover: var(--color-brand-01-darkest);
+    --background-hover: var(--color-brand-01-lighter);
+
+    /* focus */
+    --outline-color-focused: var(--color-transparent);
+
+    /* pressed */
+    --background-pressed: #fff100;
+
+    /* disabled */
+    --color-disabled: var(--color-action-disabled);
+
+    /* background color */
+    --background: var(--color-transparent);
+}
+
 .po-dropdown-button-open, .po-dropdown-button-open:hover {
     background: #fffccc;
-
 }
+
 
 .po-item-list__selected {
     background-color: #fffaaa;
@@ -299,14 +319,6 @@ po-widget {
     color: #24224c;
 }
 
-:root {
-    --color-stepper-circle-active: #fff100;
-    --color-stepper-circle-default: #24224c;
-    --color-stepper-circle-disabled: var(--color-neutral-light-30);
-    --color-stepper-circle-error: var(--color-feedback-negative-base);
-    --outline-color-focused: transparent;
-}   
-
 .po-page-login-header-welcome {
     color: #24224c;
 } 
@@ -367,12 +379,38 @@ div.po-lookup-filter-content input.po-input,
     font-style: normal;
 }
 
+.finalLinha{
+    float: inline-end;
+}
+
+/* Disable text selection for the entire page */
+body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+}
+
+/* Alternatively, disable text selection for specific elements */
+.no-select {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+}
+
 :root {
+    --color-stepper-circle-active: #fff100;
+    --color-stepper-circle-default: #24224c;
+    --color-stepper-circle-disabled: var(--color-neutral-light-30);
+    --color-stepper-circle-error: var(--color-feedback-negative-base);
+    --outline-color-focused: transparent;
+    
     --font-family-theme: TTSupermolotNeue;
     --font-family-theme-bold: TTSupermolotNeue-Bold;
     --font-family-theme-extra-light: TTSupermolotNeueCondensed;
-
     --font-family-heading: TTSupermolotNeue;
+    --font-family: TTSupermolotNeue;
 
     --background: #ffffff;
     --color-hover: #fff100;
@@ -408,24 +446,4 @@ div.po-lookup-filter-content input.po-input,
     --color-11: #5843c8;
     --color-12: #00b28e;
 
-}
-
-.finalLinha{
-    float: inline-end;
-}
-
-/* Disable text selection for the entire page */
-body {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* Internet Explorer/Edge */
-    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
-}
-
-/* Alternatively, disable text selection for specific elements */
-.no-select {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* Internet Explorer/Edge */
-    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
 }

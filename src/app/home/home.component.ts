@@ -24,11 +24,11 @@ export class HomeComponent {
   }
 
   readonly menus: Array<PoMenuItem> = [
-    { label: 'Painel', link: './painel', icon: 'ph ph-ranking', shortLabel: 'Painel' }, // , action: () => this.router.navigate(['painel'])
-    { label: 'Estruturas de orçamentos', link: './estrutura', icon: 'ph ph-tree-view', shortLabel: 'Estruturas' }, // action: () => this.router.navigate(['estrutura']), 
-    { label: 'Solicitar orçamento', link: './solicitar', icon: 'ph ph-receipt', shortLabel: 'Solicitar' }, // , action: () => this.router.navigate(['solicitar'])
-    { label: 'Formação de orçamento', link: './cadastro', icon: 'ph ph-layout', shortLabel: 'Orçamentos' }, // , action: () => this.router.navigate(['cadastro'])
-    { label: 'Sair', action: () => this.closeApp(), icon: 'ph ph-sign-out', shortLabel: 'Sair' }
+    { label: 'Painel', link: './painel', icon: 'an an-ranking', shortLabel: 'Painel' }, // , action: () => this.router.navigate(['painel'])
+    { label: 'Estruturas de orçamentos', link: './estrutura', icon: 'an an-tree-view', shortLabel: 'Estruturas' }, // action: () => this.router.navigate(['estrutura']), 
+    { label: 'Solicitar orçamento', link: './solicitar', icon: 'an an-receipt', shortLabel: 'Solicitar' }, // , action: () => this.router.navigate(['solicitar'])
+    { label: 'Formação de orçamento', link: './cadastro', icon: 'an an-layout', shortLabel: 'Orçamentos' }, // , action: () => this.router.navigate(['cadastro'])
+    { label: 'Sair', action: () => this.closeApp(), icon: 'an an-sign-out', shortLabel: 'Sair' }
   ]; 
   
   closeApp(): void {
