@@ -31,7 +31,7 @@ export class LoginComponent {
 
   loginSubmit(formData: PoPageLogin) {
     const user = Object.assign({ username: formData.login, password: formData.password }); 
-    console.log("loginSubmit")
+    
     this.loginService.getLogin(formData.login, formData.password).subscribe(response => {
       if (response.nome) {      
 

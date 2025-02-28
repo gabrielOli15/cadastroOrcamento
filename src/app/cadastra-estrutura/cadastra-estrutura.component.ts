@@ -126,7 +126,6 @@ export class CadastraEstruturaComponent {
     }
 
     onChangeTipoEstrutura($event) {
-      console.log($event);
     }
 
     isConfirmedEstrutura() {
@@ -731,12 +730,9 @@ export class CadastraEstruturaComponent {
     ];
 
     changeservico($event) {
-      console.log('event')
-      console.log($event)
       this.itemsListSelected.push({ 
         item: $event, 
         label: $event, 
       });
-      console.log(this.estruturas);
     }
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PoMenuItem, PoNavbarIconAction, PoThemeModule } from '@po-ui/ng-components';
-import { ProAppConfigService } from '@totvs/protheus-lib-core';
 import { PoStorageService } from '@po-ui/ng-storage';
 import { PoNavbarLiterals } from '@po-ui/ng-components/lib/components/po-navbar/interfaces/po-navbar-literals.interface';
 
@@ -18,9 +17,7 @@ export class HomeComponent {
   constructor (
     private router: Router,
     private storage: PoStorageService,
-    private proAppConfigService: ProAppConfigService
   ) {
-    this.proAppConfigService.loadAppConfig();
   }
 
   readonly menus: Array<PoMenuItem> = [
@@ -32,7 +29,6 @@ export class HomeComponent {
   ]; 
   
   closeApp(): void {
-    //this.proAppConfigService.callAppClose(false);
     this.storage.remove('loggedIn').then(() => {
       this.router.navigate(['/login']);
     });

@@ -6,7 +6,6 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 
 import { RouterModule } from '@angular/router';
-import { ProtheusLibCoreModule } from '@totvs/protheus-lib-core';
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component'; 
 import { HttpClientModule } from '@angular/common/http';
@@ -29,7 +28,6 @@ import { PoModule } from '@po-ui/ng-components';
     RouterModule.forRoot([]), 
     ToolbarModule,
     HttpClientModule,
-    ProtheusLibCoreModule,
     PoStorageModule.forRoot({
       name: 'appconference',
       storeName: 'mystore',
