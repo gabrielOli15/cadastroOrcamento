@@ -366,6 +366,10 @@ div.po-lookup-filter-content input.po-input,
     color: #24224c;
 }
 
+po-loading-icon {
+    --color: #fff100;
+}
+
 @font-face {
     font-family: 'TTSupermolotNeue';
     src: url('./assets/fonts/TTSupermolotNeue/TTSupermolotNeue-Regular.ttf');
@@ -408,6 +412,10 @@ body {
     user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
 }
 
+.po-page-list-filter-search-link {
+    color: #24224c;
+}
+
 :root {
     --color-stepper-circle-active: #24224c;
     --color-stepper-circle-default: #24224c;
@@ -441,6 +449,7 @@ body {
     --color-rich-text-background-color-scrollbar: #fff100;
     --color-slide-background-color-scrollbar: #fff100;
     --color-table-column-manager-body-color-background-scrollbar: #fff100;
+    --color-page-content-background-color-scrollbar: #fff100;
 
     --color-01: #0c9abe;
     --color-02: #ab43c8;

@@ -1,9 +1,10 @@
 <po-page-dynamic-table
   #dynamicTable
-  p-title="Estruturas de Orçamentos"
+  p-title="Cadastro de Parâmetros"
   [p-auto-router]="true"
   [p-concat-filters]="true"
   [p-keep-filters]="true"
+  [p-actions]="actions"
   [p-actions-right]="actionsRight"
   [p-page-custom-actions]="pageCustomActions"
   [p-table-custom-actions]="tableCustomActions"
@@ -20,6 +21,7 @@
     quickSearchLabel: 'Valor pesquisado:',
     searchPlaceholder: 'Pesquise aqui'
   }"
+  [p-spacing]="tableSpacing"
   (p-dynamic-table-edit)="onEdit($event)"
   (p-dynamic-table-view)="onView($event)"
   (p-dynamic-table-delete)="onDelete($event)"

@@ -5,9 +5,6 @@ import { PoStorageService } from '@po-ui/ng-storage';
 import { api } from '../../../model/api';
 
 const apiData: api = new api();
-const headers = new HttpHeaders() 
-      .append('Content-Type','application/json')
-      .append('Authorization','Basic ' + btoa(apiData.USER));
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +21,7 @@ export class LoginService {
 
   //Método responsável por buscar e listar nossos fornecedores
   getLogin(user: string, password: string): Observable<any> {
-    return this.http.get(this.ApiRest + 'user='+user+'&password='+password,{headers: headers}); 
+    return this.http.get(this.ApiRest + 'user='+user+'&password='+password); 
   }
 
   async isLoggedIn(): Promise<Date> {   

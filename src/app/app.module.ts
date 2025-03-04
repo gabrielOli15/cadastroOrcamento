@@ -15,11 +15,13 @@ import { LoginService } from './login/shared/service/login.service';
 import { AuthGuardService } from './login/shared/service/auth-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PoModule } from '@po-ui/ng-components';
+import {  withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './shared/auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent 
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,7 @@ import { PoModule } from '@po-ui/ng-components';
     {provide: LocationStrategy, useClass: PathLocationStrategy},
     LoginService,
     AuthGuardService,
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(),withInterceptors([authInterceptor])),
   ],
   exports: [
     PoStorageModule

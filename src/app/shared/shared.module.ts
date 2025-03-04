@@ -5,6 +5,8 @@ import { PoTemplatesModule } from '@po-ui/ng-templates';
 import { FormsModule, NgForm } from '@angular/forms';
 import { PoTableModule } from '@po-ui/ng-components';
 export * from '@po-ui/ng-components'; 
+import { HttpHeaders } from '@angular/common/http';
+import { api } from '../model/api';
 
 @NgModule({
   declarations: [],
@@ -21,4 +23,13 @@ export * from '@po-ui/ng-components';
     PoTableModule
   ]
 })
-export class SharedModule { }
+export class SharedModule { 
+  
+  defaultHeader() {
+    const apiData: api = new api();
+    const headers = new HttpHeaders() 
+      .append('Content-Type','application/json')
+      .append('Authorization','Basic ' + btoa(apiData.USER));
+    return headers;
+  }
+}

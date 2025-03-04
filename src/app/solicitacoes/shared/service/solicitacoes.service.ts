@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class EstruturaOrcamentoService {
+export class SolicitacoesService {
 
   constructor(public http: HttpClient) {}
   

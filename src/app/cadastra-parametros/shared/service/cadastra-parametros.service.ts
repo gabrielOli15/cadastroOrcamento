@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class EstruturaOrcamentoService {
+export class CadastraParametrosService {
 
   constructor(public http: HttpClient) {}
-  
+
   downloadCsv(endpoint: any) {
     this.http.get(endpoint).subscribe((data: any) => {
       const csvStr = this.parseJsonToCsv(data['items']);

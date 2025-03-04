@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { PainelService } from "./shared/Service/painel.service"; 
 import { PoChartOptions, PoChartSerie, PoChartType, PoDialogService, 
   PoModalComponent, PoNotificationService, PoTableAction, PoTableColumn, 
-  PoTableComponent, PoTreeViewItem, SharedModule } from '../shared/shared.module';
+  PoTableComponent, PoTreeViewItem, SharedModule, PoBreadcrumb } from '../shared/shared.module';
+import { Router } from '@angular/router';
 
 @Component({
     imports: [SharedModule],
@@ -62,11 +63,17 @@ export class PainelComponent {
     }
   ];
 
+  public readonly breadcrumb: PoBreadcrumb = {
+    items: [{ label: 'Orçamentos', action: () => this.router.navigate(['/']) }, { label: 'Painel' }]
+  }; 
+
   constructor(
     private poAlert: PoDialogService,
     private painelService: PainelService, 
     private poNotification: PoNotificationService,
-    private poDialog: PoDialogService
+    private poDialog: PoDialogService,
+    private router: Router
+    
   ) {}
 
   chartType: PoChartType = PoChartType.Donut;

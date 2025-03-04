@@ -1,14 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { PoTableColumn } from '@po-ui/ng-components';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EstruturaOrcamentoService {
+export class AtualizacaoPrecosService {
 
   constructor(public http: HttpClient) {}
-  
+
   downloadCsv(endpoint: any) {
     this.http.get(endpoint).subscribe((data: any) => {
       const csvStr = this.parseJsonToCsv(data['items']);
