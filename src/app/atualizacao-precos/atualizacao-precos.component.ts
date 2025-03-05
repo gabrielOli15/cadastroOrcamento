@@ -16,7 +16,7 @@ export class AtualizacaoPrecosComponent {
   @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
   @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
 
-  readonly serviceApi = 'https://po-sample-api.onrender.com/v1/people'; 
+  readonly serviceApi = 'http://192.168.2.235:7200/rest/cardallapis/SB1'; 
   actionsRight = false;
   detailedUser: any;
   dependents: any;
@@ -24,7 +24,6 @@ export class AtualizacaoPrecosComponent {
   fixedFilter = false;
 
   readonly actions: PoPageDynamicTableActions = {
-    new: '/documentation/po-page-dynamic-edit',
     remove: true,
     removeAll: true
   };
@@ -35,59 +34,53 @@ export class AtualizacaoPrecosComponent {
 
   readonly tableSpacing: PoTableColumnSpacing = PoTableColumnSpacing.Small;
 
-  readonly cityOptions: Array<object> = [
-    { value: 'São Paulo', label: 'São Paulo' },
-    { value: 'Joinville', label: 'Joinville' },
-    { value: 'São Bento', label: 'São Bento' },
-    { value: 'Araquari', label: 'Araquari' },
-    { value: 'Campinas', label: 'Campinas' },
-    { value: 'Osasco', label: 'Osasco' }
-  ];
-
   fields: Array<any> = [
-    { property: 'id', key: true, visible: false, filter: true },
-    { property: 'name', label: 'Name', filter: true, gridColumns: 6 },
-    { property: 'genre', label: 'Genre', filter: true, gridColumns: 6, duplicate: true, sortable: false },
-    { property: 'search', filter: true, visible: false },
-    {
-      property: 'birthdate',
-      label: 'Birthdate',
-      type: 'date',
-      gridColumns: 6,
-      visible: false,
-      allowColumnsManager: true
-    },
-    { property: 'city', label: 'City', filter: true, duplicate: true, options: this.cityOptions, gridColumns: 12 }
+    { property: 'b1_grupo', label: 'Grupo', key: true, visible: true, filter: true },
+    { property: 'b1_cod', label: 'Cod', key: true, visible: true, filter: true },
+    { property: 'b1_desc', label: 'Descrição', filter: true },
+    { property: 'b1_custd', label: 'Valor', filter: true, gridColumns: 6, duplicate: true, sortable: false } 
   ];
 
   readonly detailFields: Array<PoDynamicViewField> = [
-    { property: 'status', tag: true, gridLgColumns: 4, divider: 'Personal Data' },
-    { property: 'name', gridLgColumns: 4 },
-    { property: 'nickname', label: 'User name', gridLgColumns: 4 },
-    { property: 'email', gridLgColumns: 4 },
-    { property: 'birthdate', gridLgColumns: 4, type: 'date' },
-    { property: 'genre', gridLgColumns: 4, gridSmColumns: 6 },
-    { property: 'cityName', label: 'City', divider: 'Address' },
-    { property: 'state' },
-    { property: 'country' }
+    {property: 'b1_grupo', label: ''},
+    {property: 'b1_cod', label: ''},
+    {property: 'b1_desc', label: ''},
+    {property: 'b1_tipo', label: ''},
+    {property: 'b1_subgrup', label: ''},
+    {property: 'b1_um', label: ''},
+    {property: 'b1_locpad', label: ''},
+    {property: 'b1_pesopad', label: ''},
+    {property: 'b1_picm', label: ''},
+    {property: 'b1_ipi', label: ''},
+    {property: 'b1_posipi', label: ''},
+    {property: 'b1_especie', label: ''},
+    {property: 'b1_ex_ncm', label: ''},
+    {property: 'b1_ex_nbm', label: ''},
+    {property: 'b1_endcar', label: ''},
+    {property: 'b1_aliqiss', label: ''},
+    {property: 'b1_codiss', label: ''},
+    {property: 'b1_te', label: ''},
+    {property: 'b1_ts', label: ''},
+    {property: 'b1_picmret', label: ''},
+    {property: 'b1_picment', label: ''}, 
   ];
 
   pageCustomActions: Array<PoPageDynamicTableCustomAction> = [
-    { label: 'Print', action: this.printPage.bind(this), icon: 'an an-printer' }
+    { label: 'PDF', action: this.printPage.bind(this), icon: 'an an-printer' }
   ];
 
   tableCustomActions: Array<PoPageDynamicTableCustomTableAction> = [
     {
-      label: 'Details',
+      label: 'Detalhes',
       action: this.onClickUserDetail.bind(this),
-      disabled: this.isUserInactive.bind(this),
-      icon: 'an an-user'
+      disabled: false, //this.isUserInactive.bind(this)
+      icon: 'an an-subtitles'
     },
     {
-      label: 'Dependents',
-      action: this.onClickDependents.bind(this),
-      visible: this.hasDependents.bind(this),
-      icon: 'an an-user'
+      label: 'Corrigir valor',
+      action: this.onClickUserDetail.bind(this),
+      disabled: false,
+      icon: 'an an-pencil-simple'
     }
   ];
 
@@ -100,7 +93,7 @@ export class AtualizacaoPrecosComponent {
     this.pageCustomActions = [
       ...this.pageCustomActions,
       {
-        label: 'Download .csv',
+        label: 'CSV',
         action: this.atualizacaoPrecosService.downloadCsv.bind(this.atualizacaoPrecosService, this.serviceApi),
         icon: 'an an-download-simple'
       }

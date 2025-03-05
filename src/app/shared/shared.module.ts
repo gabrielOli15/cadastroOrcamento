@@ -7,29 +7,24 @@ import { PoTableModule } from '@po-ui/ng-components';
 export * from '@po-ui/ng-components'; 
 import { HttpHeaders } from '@angular/common/http';
 import { api } from '../model/api';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     FormsModule,
-    PoTableModule
+    PoTableModule,
+    RouterModule
   ],
   exports:[
     PoModule,
     PoTemplatesModule,
     FormsModule,
     NgForm,
-    PoTableModule
+    PoTableModule,
+    
   ]
 })
-export class SharedModule { 
-  
-  defaultHeader() {
-    const apiData: api = new api();
-    const headers = new HttpHeaders() 
-      .append('Content-Type','application/json')
-      .append('Authorization','Basic ' + btoa(apiData.USER));
-    return headers;
-  }
+export class SharedModule {  
 }

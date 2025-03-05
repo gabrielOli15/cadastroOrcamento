@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { SolicitaOrcamentoService } from'./shared/service/solicita-orcamento.service';
-import { ForceBooleanComponentEnum, PoDynamicFormField, PoDynamicFormFieldChanged, 
+import { ForceBooleanComponentEnum, PoBreadcrumb, PoDynamicFormField, PoDynamicFormFieldChanged, 
   PoDynamicFormValidation, PoNotificationService, SharedModule } from '../shared/shared.module';
+import { Router } from '@angular/router';
 
 @Component({
     imports: [SharedModule],
@@ -13,6 +14,14 @@ import { ForceBooleanComponentEnum, PoDynamicFormField, PoDynamicFormFieldChange
 export class SolicitaOrcamentoComponent {
   person = {};
   validateFields: Array<string> = ['state'];
+
+  public readonly breadcrumb: PoBreadcrumb = {
+      items: [
+        { label: 'Orçamentos', action: () => this.router.navigate(['/']) },
+        { label: 'Solicitações', action: () => this.router.navigate(['orcamentos/solicitar']) },
+        { label: 'Cadastro' }
+      ]
+    };
 
   fields: Array<PoDynamicFormField> = [
     {
@@ -195,7 +204,8 @@ export class SolicitaOrcamentoComponent {
 
   constructor(
     public poNotification: PoNotificationService,
-    private registerService: SolicitaOrcamentoService
+    private registerService: SolicitaOrcamentoService,
+    private router: Router
   ) {}
 
   ngOnInit() {

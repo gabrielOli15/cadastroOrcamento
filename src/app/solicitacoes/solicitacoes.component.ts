@@ -23,7 +23,7 @@ export class SolicitacoesComponent {
     fixedFilter = false;
   
     readonly actions: PoPageDynamicTableActions = {
-      new: '/documentation/po-page-dynamic-edit',
+      new: '/orcamentos/solicita-orcamento',
       remove: true,
       removeAll: true
     };
@@ -44,19 +44,8 @@ export class SolicitacoesComponent {
     ];
   
     fields: Array<any> = [
-      { property: 'id', key: true, visible: false, filter: true },
-      { property: 'name', label: 'Name', filter: true, gridColumns: 6 },
-      { property: 'genre', label: 'Genre', filter: true, gridColumns: 6, duplicate: true, sortable: false },
-      { property: 'search', filter: true, visible: false },
-      {
-        property: 'birthdate',
-        label: 'Birthdate',
-        type: 'date',
-        gridColumns: 6,
-        visible: false,
-        allowColumnsManager: true
-      },
-      { property: 'city', label: 'City', filter: true, duplicate: true, options: this.cityOptions, gridColumns: 12 }
+      { property: 'city', label: 'Codigo', filter: true, duplicate: true, options: this.cityOptions, gridColumns: 12 },
+      { property: 'name', label: 'Solicitante', filter: true, gridColumns: 6 }
     ];
   
     readonly detailFields: Array<PoDynamicViewField> = [

@@ -1,5 +1,6 @@
 <po-page-default
-  p-title="Solicita orçamento ">
+  p-title="Solicita orçamento "
+  [p-breadcrumb]="breadcrumb">
   <po-dynamic-form
   #dynamicForm
   p-auto-focus="name"
@@ -8,6 +9,7 @@
   [p-validate]="this.onChangeFields.bind(this)"
   [p-validate-fields]="validateFields"
   [p-value]="person"
+  
 >
 </po-dynamic-form>
 

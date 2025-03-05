@@ -16,7 +16,7 @@ export class EstruturaOrcamentoComponent {
   @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
     @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
   
-    readonly serviceApi = 'https://po-sample-api.onrender.com/v1/people'; 
+    readonly serviceApi = 'http://192.168.2.235:7200/rest/cardallapis/SB1'; 
     actionsRight = false;
     detailedUser: any;
     dependents: any;
@@ -38,20 +38,19 @@ export class EstruturaOrcamentoComponent {
       { value: 'Osasco', label: 'Osasco' }
     ];
   
+
     fields: Array<any> = [
-      { property: 'id', key: true, visible: false, filter: true },
-      { property: 'name', label: 'Name', filter: true, gridColumns: 6 },
-      { property: 'genre', label: 'Genre', filter: true, gridColumns: 6, duplicate: true, sortable: false },
-      { property: 'search', filter: true, visible: false },
-      {
-        property: 'birthdate',
-        label: 'Birthdate',
-        type: 'date',
-        gridColumns: 6,
-        visible: false,
-        allowColumnsManager: true
-      },
-      { property: 'city', label: 'City', filter: true, duplicate: true, options: this.cityOptions, gridColumns: 12 }
+      { property: 'ZX1_COD', label: 'codigo'},
+      { property: 'ZX1_STAT', label: 'status'},
+      { property: 'ZX1_DESC', label: 'descricao'},
+      { property: 'ZX1_ESTRU', label: 'estrutura'},
+      { property: 'ZX1_TIPO', label: 'tipo'},
+      { property: 'ZX1_REV', label: 'revisao'},
+      { property: 'ZX1_DATA', label: 'data'},
+      { property: 'ZX1_USU', label: 'usuario'},
+      { property: 'ZX1_PESO', label: 'peso'},
+      { property: 'ZX1_HORAS', label: 'horas'},
+      { property: 'ZX1_VALOR', label: 'valor'} 
     ];
   
     readonly detailFields: Array<PoDynamicViewField> = [
@@ -68,11 +67,11 @@ export class EstruturaOrcamentoComponent {
   
     pageCustomActions: Array<PoPageDynamicTableCustomAction> = [
       { label: 'Nova Estrutura', action: this.novaEstrutura.bind(this),   }, 
-      { label: 'Alterar', action: this.handleEstrutura.bind(this,1), visible: this.validaSelecao.bind(this) }, 
-      { label: 'Excluir', action: this.handleEstrutura.bind(this,2), visible: this.validaSelecao.bind(this)  }, 
-      { label: 'Bloquear', action: this.handleEstrutura.bind(this,3), visible: this.validaSelecao.bind(this)  }, 
-      { label: 'Desbloquear', action: this.handleEstrutura.bind(this,4), visible: this.validaSelecao.bind(this)  }, 
-      { label: 'Copiar', action: this.handleEstrutura.bind(this,5), visible: this.validaSelecao.bind(this)  }
+      { label: 'Alterar', action: this.handleEstrutura.bind(this,1), visible: this.validaSelecao.bind(this), selectable: true }, 
+      { label: 'Excluir', action: this.handleEstrutura.bind(this,2), visible: this.validaSelecao.bind(this), selectable: true  }, 
+      { label: 'Bloquear', action: this.handleEstrutura.bind(this,3), visible: this.validaSelecao.bind(this), selectable: true  }, 
+      { label: 'Desbloquear', action: this.handleEstrutura.bind(this,4), visible: this.validaSelecao.bind(this), selectable: true  }, 
+      { label: 'Copiar', action: this.handleEstrutura.bind(this,5), visible: this.validaSelecao.bind(this), selectable: true  }
     ];
   
     tableCustomActions: Array<PoPageDynamicTableCustomTableAction> = [

@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { PoBreadcrumb, PoDialogService, PoDynamicViewField, PoModalComponent, PoNotification, PoNotificationService, PoPageAction, PoSelectOption, PoTableColumn, PoTableColumnSpacing, SharedModule } from '../shared/shared.module';
-import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters, PoPageDynamicTableActions, PoPageDynamicTableCustomAction, PoPageDynamicTableCustomTableAction, PoPageDynamicTableOptions } from '@po-ui/ng-templates';
+import { PoBreadcrumb, PoDynamicFormField, SharedModule } from '../shared/shared.module';
+import { PoPageDynamicEditComponent, PoPageDynamicEditActions, PoPageDynamicEditLiterals  } from '@po-ui/ng-templates';
 import { Router } from '@angular/router';
-import { CadastraParametrosService } from './shared/service/cadastra-parametros.service';
+import { CadastraParametrosService } from './shared/service/cadastra-parametros.service'; 
 
 @Component({
   selector: 'app-cadastra-parametros',
@@ -12,175 +12,91 @@ import { CadastraParametrosService } from './shared/service/cadastra-parametros.
   styleUrl: './cadastra-parametros.component.css'
 })
 export class CadastraParametrosComponent {
-  
-  @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
-  @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
+  @ViewChild('dynamicEdit', { static: true }) dynamicEdit: PoPageDynamicEditComponent | undefined;
 
-  readonly serviceApi = 'https://po-sample-api.onrender.com/v1/people'; 
-  actionsRight = false;
-  detailedUser: any;
-  dependents: any;
-  quickSearchWidth: number = 3;
-  fixedFilter = false;
+  constructor(
+      private router: Router,
+      private cadastraParametrosService: CadastraParametrosService
+  ) {}
 
-  readonly actions: PoPageDynamicTableActions = {
-    new: '/documentation/po-page-dynamic-edit',
-    remove: true,
-    removeAll: true
+  public readonly serviceApi = 'https://po-sample-api.onrender.com/v1/people';
+
+  public readonly actions: PoPageDynamicEditActions = {
+    save: '/documentation/po-page-dynamic-detail',
+    saveNew: '/documentation/po-page-dynamic-edit'
+  };
+
+  public readonly literals: PoPageDynamicEditLiterals = {
+    pageActionCancel: 'Descartar',
+    pageActionSave: 'Gravar',
+    pageActionSaveNew: 'Gravar e novo'
   };
 
   public readonly breadcrumb: PoBreadcrumb = {
-    items: [{ label: 'Orçamentos', action: () => this.router.navigate(['/']) }, { label: 'Parâmetros' }]
+    items: [
+      { label: 'Orçamentos', action: () => this.router.navigate(['/']) },
+      { label: 'Parâmetros', action: () => this.router.navigate(['orcamentos/parametros']) },
+      { label: 'Cadastro' }
+    ]
   };
 
-  readonly tableSpacing: PoTableColumnSpacing = PoTableColumnSpacing.Small;
-
-  readonly cityOptions: Array<object> = [
-    { value: 'São Paulo', label: 'São Paulo' },
-    { value: 'Joinville', label: 'Joinville' },
-    { value: 'São Bento', label: 'São Bento' },
-    { value: 'Araquari', label: 'Araquari' },
-    { value: 'Campinas', label: 'Campinas' },
-    { value: 'Osasco', label: 'Osasco' }
-  ];
-
-  fields: Array<any> = [
-    { property: 'id', key: true, visible: false, filter: true },
-    { property: 'name', label: 'Name', filter: true, gridColumns: 6 },
-    { property: 'genre', label: 'Genre', filter: true, gridColumns: 6, duplicate: true, sortable: false },
-    { property: 'search', filter: true, visible: false },
-    {
-      property: 'birthdate',
-      label: 'Birthdate',
-      type: 'date',
-      gridColumns: 6,
-      visible: false,
-      allowColumnsManager: true
+  public readonly fields: Array<PoDynamicFormField> = [
+    { 
+      property: 'b1_cod', 
+      divider: 'Mão de Obra', 
+      label: 'Mão de Obra', 
+      key: true, 
+      required: true, 
+      optionsService: 'http://192.168.2.235:7200/rest/cardallapis/SB1',
+      optionsMulti: false
     },
-    { property: 'city', label: 'City', filter: true, duplicate: true, options: this.cityOptions, gridColumns: 12 }
-  ];
-
-  readonly detailFields: Array<PoDynamicViewField> = [
-    { property: 'status', tag: true, gridLgColumns: 4, divider: 'Personal Data' },
-    { property: 'name', gridLgColumns: 4 },
-    { property: 'nickname', label: 'User name', gridLgColumns: 4 },
-    { property: 'email', gridLgColumns: 4 },
-    { property: 'birthdate', gridLgColumns: 4, type: 'date' },
-    { property: 'genre', gridLgColumns: 4, gridSmColumns: 6 },
-    { property: 'cityName', label: 'City', divider: 'Address' },
-    { property: 'state' },
-    { property: 'country' }
-  ];
-
-  pageCustomActions: Array<PoPageDynamicTableCustomAction> = [
-    { label: 'Print', action: this.printPage.bind(this), icon: 'an an-printer' }
-  ];
-
-  tableCustomActions: Array<PoPageDynamicTableCustomTableAction> = [
-    {
-      label: 'Details',
-      action: this.onClickUserDetail.bind(this),
-      disabled: this.isUserInactive.bind(this),
-      icon: 'an an-user'
+    { 
+      property: 'g1_cod', 
+      label: 'Estruturas', 
+      key: true, 
+      required: true, 
+      optionsService: 'http://192.168.2.235:7200/rest/cardallapis/SG1',
+      optionsMulti: true
     },
-    {
-      label: 'Dependents',
-      action: this.onClickDependents.bind(this),
-      visible: this.hasDependents.bind(this),
-      icon: 'an an-user'
-    }
-  ];
-
-  constructor(
-      private cadastraParametrosService: CadastraParametrosService,
-      private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.pageCustomActions = [
-      ...this.pageCustomActions,
-      {
-        label: 'Download .csv',
-        action: this.cadastraParametrosService.downloadCsv.bind(this.cadastraParametrosService, this.serviceApi),
-        icon: 'an an-download-simple'
-      }
-    ];
-  }
-
-  onLoad(): PoPageDynamicTableOptions {
-    return {
-      fields: [
-        { property: 'id', key: true, visible: true, filter: true },
-        { property: 'name', label: 'Name', filter: true, gridColumns: 6 },
-        { property: 'genre', label: 'Genre', filter: true, gridColumns: 6, duplicate: true },
-        { property: 'search', initValue: 'São Paulo' },
-        {
-          property: 'birthdate',
-          label: 'Birthdate',
-          type: 'date',
-          gridColumns: 6,
-          visible: false,
-          allowColumnsManager: true
-        }
+    { 
+      property: 'zx2_tpprod', 
+      label: 'Tp. Prod.', 
+      required: true,
+      options:[
+        { value: 'K', label: 'Kg/h', color: 'color-01' }
       ]
-    };
-  }
+    },
+    { 
+      property: 'zx2_vlprod', 
+      label: 'Produtividade', 
+      required: true,
+      type: 'number'
+    },
+    { 
+      property: 'zx2_kit', 
+      divider: 'Kit Tinta', 
+      label: 'Kit Tinta', 
+      key: true, 
+      required: true, 
+      optionsService: 'http://192.168.2.235:7200/rest/cardallapis/SB1',
+      optionsMulti: false
+    },
+    { property: 'zx2_cmc', divider: 'Consumíveis', label: '% Cons. MC', type: 'number', offsetMdColumns: 6,
+      offsetLgColumns: 6,
+      gridMdColumns: 6,
+      gridLgColumns: 6 },
+    { property: 'zx2_cmt', label: '% Cons. MT', type: 'number', gridLgColumns: 6 },
+    { property: 'zx2_smc', label: '% Sucata MC', type: 'number', gridLgColumns: 6 },
+    { property: 'zx2_smt', label: '% Sucata MT', type: 'number', gridLgColumns: 6 },
+    { property: 'zx2_fmc', label: '% Frete MC', type: 'number', gridLgColumns: 6 },
+    { property: 'zx2_fmt', label: '% Frete MT', type: 'number', gridLgColumns: 6  }
+  ];
 
-  isUserInactive(person: any) {
-    return person.status === 'inactive';
-  }
-
-  hasDependents(person: any) {
-    return person.dependents.length !== 0;
-  }
-
-  printPage() {
-    window.print();
-  }
-
-  private onClickUserDetail(user: any) {
-    this.detailedUser = user;
-
-    this.userDetailModal.open();
-  }
-
-  private onClickDependents(user: any) {
-    this.dependents = user.dependents;
-
-    this.dependentsModal.open();
-  }
-
-  onEdit($event: Event) {
-    console.log('onEdit');
-  }
-    onView($event: Event) {
-    console.log('onView');
-  }
-    onDelete($event: Event) {
-    console.log('onDelete');
-  }
-    onDuplicate($event: Event) {
-    console.log('onDuplicate');
-  }
-    onSelect($event: Event) {
-    console.log('onSelect');
-  }
-    onDeselect($event: Event) {
-    console.log('onDeselect');
-  }
-    onLoadMore($event: Event) {
-    console.log('onLoadMore');
-  }
-    onRowClick($event: Event) {
-    console.log('onRowClick');
-  }
-    onRowDoubleClick($event: Event) {
-    console.log('onRowDoubleClick');
-  }
-    onRowSelection($event: Event) {
-    console.log('onRowSelection');
-  }
-    onRowDeselection($event: Event) {
-    console.log('onRowDeselection');
+  onKeyDown(property: string, event: KeyboardEvent): void {
+    if (event.code === 'F9') {
+      if (this.dynamicEdit) {
+        this.dynamicEdit.showAdditionalHelp(property);
+      }
+    }
   }
 }

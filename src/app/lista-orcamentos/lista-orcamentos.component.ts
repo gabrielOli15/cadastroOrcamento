@@ -15,7 +15,7 @@ export class ListaOrcamentosComponent {
   @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
   @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
 
-  readonly serviceApi = 'https://po-sample-api.onrender.com/v1/people'; 
+  readonly serviceApi = 'http://192.168.2.235:7200/rest/cardallapis/SA1'; 
   actionsRight = false;
   detailedUser: any;
   dependents: any;
@@ -23,7 +23,7 @@ export class ListaOrcamentosComponent {
   fixedFilter = false;
 
   readonly actions: PoPageDynamicTableActions = {
-    new: '/documentation/po-page-dynamic-edit',
+    new: '/orcamentos/cadastro-estrutura',
     remove: true,
     removeAll: true
   };
@@ -44,19 +44,10 @@ export class ListaOrcamentosComponent {
   ];
 
   fields: Array<any> = [
-    { property: 'id', key: true, visible: false, filter: true },
-    { property: 'name', label: 'Name', filter: true, gridColumns: 6 },
-    { property: 'genre', label: 'Genre', filter: true, gridColumns: 6, duplicate: true, sortable: false },
-    { property: 'search', filter: true, visible: false },
-    {
-      property: 'birthdate',
-      label: 'Birthdate',
-      type: 'date',
-      gridColumns: 6,
-      visible: false,
-      allowColumnsManager: true
-    },
-    { property: 'city', label: 'City', filter: true, duplicate: true, options: this.cityOptions, gridColumns: 12 }
+    { property: 'a1_cod', label: 'codigo'},
+    { property: 'a1_nome', label: 'cliente'},
+    { property: 'a1_maidupl', label: 'valor'},
+    { property: 'a1_email', label: 'e-mail'}
   ];
 
   readonly detailFields: Array<PoDynamicViewField> = [

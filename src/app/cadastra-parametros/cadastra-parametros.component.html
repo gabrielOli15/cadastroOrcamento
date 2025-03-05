@@ -1,44 +1,11 @@
-<po-page-dynamic-table
-  #dynamicTable
-  p-title="Cadastro de Parâmetros"
+<po-page-dynamic-edit
+  #dynamicEdit
   [p-auto-router]="true"
-  [p-concat-filters]="true"
-  [p-keep-filters]="true"
+  p-title="Cadastro de Parâmetros"
   [p-actions]="actions"
-  [p-actions-right]="actionsRight"
-  [p-page-custom-actions]="pageCustomActions"
-  [p-table-custom-actions]="tableCustomActions"
   [p-breadcrumb]="breadcrumb"
   [p-fields]="fields"
+  [p-literals]="literals"
   [p-service-api]="serviceApi"
-  [p-quick-search-width]="quickSearchWidth"
-  [p-height]="600"
-  [p-literals]="{
-    disclaimerGroupTitle: 'Filtros aplicados:',
-    filterTitle: 'Filtro avançado',
-    filterCancelLabel: 'Fechar',
-    filterConfirmLabel: 'Aplicar',
-    quickSearchLabel: 'Valor pesquisado:',
-    searchPlaceholder: 'Pesquise aqui'
-  }"
-  [p-spacing]="tableSpacing"
-  (p-dynamic-table-edit)="onEdit($event)"
-  (p-dynamic-table-view)="onView($event)"
-  (p-dynamic-table-delete)="onDelete($event)"
-  (p-dynamic-table-duplicate)="onDuplicate($event)"
-  (p-dynamic-table-select)="onSelect($event)"
-  (p-dynamic-table-deselect)="onDeselect($event)"
-  (p-dynamic-table-load-more)="onLoadMore($event)"
-  (p-dynamic-table-row-click)="onRowClick($event)"
-  (p-dynamic-table-row-double-click)="onRowDoubleClick($event)"
-  (p-dynamic-table-row-selection)="onRowSelection($event)"
-  (p-dynamic-table-row-deselection)="onRowDeselection($event)"
 >
-</po-page-dynamic-table>
-<po-modal #userDetailModal p-title="User Detail">
-  <po-dynamic-view [p-fields]="detailFields" [p-value]="detailedUser"> </po-dynamic-view>
-</po-modal>
-
-<po-modal #dependentsModal p-title="Dependents">
-  <po-table [p-items]="dependents" [p-hide-table-search]="false"> </po-table>
-</po-modal>
+</po-page-dynamic-edit>

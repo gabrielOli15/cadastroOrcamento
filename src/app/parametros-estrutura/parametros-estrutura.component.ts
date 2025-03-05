@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { PoBreadcrumb, PoDialogService, PoDynamicViewField, PoModalComponent, PoNotification, PoNotificationService, PoPageAction, PoSelectOption, PoTableColumn, PoTableColumnSpacing, SharedModule } from '../shared/shared.module';
-import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters, PoPageDynamicTableActions, PoPageDynamicTableCustomAction, PoPageDynamicTableCustomTableAction, PoPageDynamicTableOptions } from '@po-ui/ng-templates';
+import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters, PoPageDynamicTableActions, PoPageDynamicTableCustomAction, PoPageDynamicTableCustomTableAction, PoPageDynamicTableOptions, PoPageDynamicTableFilters } from '@po-ui/ng-templates';
 import { Router } from '@angular/router';
 import { ParametrosEstruturaService } from './shared/service/parametros-estrutura.service';
 
@@ -16,7 +16,7 @@ export class ParametrosEstruturaComponent {
   @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
   @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
 
-  readonly serviceApi = 'https://po-sample-api.onrender.com/v1/people'; 
+  readonly serviceApi = 'http://192.168.2.235:7200/rest/cardallapis/ZX2'; 
   actionsRight = false;
   detailedUser: any;
   dependents: any;
@@ -24,7 +24,7 @@ export class ParametrosEstruturaComponent {
   fixedFilter = false;
 
   readonly actions: PoPageDynamicTableActions = {
-    new: '/documentation/po-page-dynamic-edit',
+    new: '/orcamentos/cadastro-parametros',
     remove: true,
     removeAll: true
   };
@@ -44,20 +44,42 @@ export class ParametrosEstruturaComponent {
     { value: 'Osasco', label: 'Osasco' }
   ];
 
-  fields: Array<any> = [
-    { property: 'id', key: true, visible: false, filter: true },
-    { property: 'name', label: 'Name', filter: true, gridColumns: 6 },
-    { property: 'genre', label: 'Genre', filter: true, gridColumns: 6, duplicate: true, sortable: false },
-    { property: 'search', filter: true, visible: false },
-    {
-      property: 'birthdate',
-      label: 'Birthdate',
-      type: 'date',
-      gridColumns: 6,
-      visible: false,
-      allowColumnsManager: true
+  // "zx2_cod": "MOD1104",
+  // "zx2_tpprod": "K",
+  // "zx2_vlprod": 7,
+  // "zx2_kit": "4016570",
+  // "zx2_var": "P",
+  // "zx2_cmc": 0,
+  // "zx2_cmt": 3.5,
+  // "zx2_smc": 0,
+  // "zx2_smt": 10,
+  // "zx2_fmc": 1.5,
+  // "zx2_fmt": 2.5
+
+  fields: Array<PoPageDynamicTableFilters> = [
+    { property: 'zx2_cod', label: 'Mão de Obra', key: true, filter: true },
+    { property: 'zx2_tpprod', label: 'Tp. Prod.', filter: true, type: 'label',
+      labels: [
+        { value: 'K', label: 'Kg/h', color: 'color-01' },
+      ]
     },
-    { property: 'city', label: 'City', filter: true, duplicate: true, options: this.cityOptions, gridColumns: 12 }
+    { property: 'zx2_vlprod', label: 'Produtividade', filter: true},
+    { property: 'zx2_kit', label: 'Kit Tinta', filter: true }, 
+    { property: 'zx2_var', label: 'Variável', filter: true, type: 'label',
+      labels: [
+        { value: 'P', label: 'Peso', color: 'color-01' },
+        { value: 'E', label: 'Externa', color: 'color-02' },
+        { value: 'I', label: 'Interna', color: 'color-03' },
+        { value: 'A', label: 'Ambas', color: 'color-04' },
+        { value: '-', label: 'n/a', color: 'color-05' }
+      ]
+    }, 
+    { property: 'zx2_cmc', label: '% Cons. MC', filter: true },
+    { property: 'zx2_cmt', label: '% Cons. MT', filter: true },
+    { property: 'zx2_smc', label: '% Sucata MC', filter: true },
+    { property: 'zx2_smt', label: '% Sucata MT', filter: true },
+    { property: 'zx2_fmc', label: '% Frete MC', filter: true },
+    { property: 'zx2_fmt', label: '% Frete MT', filter: true }
   ];
 
   readonly detailFields: Array<PoDynamicViewField> = [
@@ -73,21 +95,25 @@ export class ParametrosEstruturaComponent {
   ];
 
   pageCustomActions: Array<PoPageDynamicTableCustomAction> = [
-    { label: 'Print', action: this.printPage.bind(this), icon: 'an an-printer' }
+    { label: 'Print', action: this.printPage.bind(this), icon: 'an an-printer' },
+    {
+      label: 'Download .csv',
+      action: this.parametrosEstruturaService.downloadCsv.bind(this.parametrosEstruturaService, this.serviceApi),
+      icon: 'an an-download-simple'
+    }
   ];
 
   tableCustomActions: Array<PoPageDynamicTableCustomTableAction> = [
     {
-      label: 'Details',
-      action: this.onClickUserDetail.bind(this),
-      disabled: this.isUserInactive.bind(this),
-      icon: 'an an-user'
+      label: 'Editar',
+      url: '/cadastro-parametros/:id',
+      icon: 'po-icon-edit'
     },
     {
-      label: 'Dependents',
-      action: this.onClickDependents.bind(this),
-      visible: this.hasDependents.bind(this),
-      icon: 'an an-user'
+      label: 'Estruturas',
+      action: this.onClickEstruturas.bind(this),
+      visible: this.possuiEstruturas.bind(this),
+      icon: 'an an-tree-view'
     }
   ];
 
@@ -97,14 +123,14 @@ export class ParametrosEstruturaComponent {
   ) {}
 
   ngOnInit(): void {
-    this.pageCustomActions = [
-      ...this.pageCustomActions,
-      {
-        label: 'Download .csv',
-        action: this.parametrosEstruturaService.downloadCsv.bind(this.parametrosEstruturaService, this.serviceApi),
-        icon: 'an an-download-simple'
-      }
-    ];
+    // this.pageCustomActions = [
+    //   ...this.pageCustomActions,
+    //   {
+    //     label: 'Download .csv',
+    //     action: this.parametrosEstruturaService.downloadCsv.bind(this.parametrosEstruturaService, this.serviceApi),
+    //     icon: 'an an-download-simple'
+    //   }
+    // ];
   }
 
   onLoad(): PoPageDynamicTableOptions {
@@ -130,8 +156,8 @@ export class ParametrosEstruturaComponent {
     return person.status === 'inactive';
   }
 
-  hasDependents(person: any) {
-    return person.dependents.length !== 0;
+  possuiEstruturas(parametro: any) {
+    return false //parametro.estruturas.length !== 0;
   }
 
   printPage() {
@@ -144,8 +170,8 @@ export class ParametrosEstruturaComponent {
     this.userDetailModal.open();
   }
 
-  private onClickDependents(user: any) {
-    this.dependents = user.dependents;
+  private onClickEstruturas(parametro: any) {
+    //this.estruturas = parametro.estruturas;
 
     this.dependentsModal.open();
   }
