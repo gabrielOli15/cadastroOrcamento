@@ -1,14 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { api } from '../../../model/api';
+import { Observable } from 'rxjs';
 
+const apiData: api = new api();
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstruturaOrcamentoService {
 
-  constructor(public http: HttpClient) {}
+  private serviceApi = apiData.URL + '/cardallapis/estrutura';
   
+  constructor(public http: HttpClient) {}
+    
   downloadCsv(endpoint: any) {
     this.http.get(endpoint).subscribe((data: any) => {
       const csvStr = this.parseJsonToCsv(data['items']);

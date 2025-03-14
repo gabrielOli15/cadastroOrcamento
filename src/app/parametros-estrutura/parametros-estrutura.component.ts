@@ -3,7 +3,9 @@ import { PoBreadcrumb, PoDialogService, PoDynamicViewField, PoModalComponent, Po
 import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters, PoPageDynamicTableActions, PoPageDynamicTableCustomAction, PoPageDynamicTableCustomTableAction, PoPageDynamicTableOptions, PoPageDynamicTableFilters } from '@po-ui/ng-templates';
 import { Router } from '@angular/router';
 import { ParametrosEstruturaService } from './shared/service/parametros-estrutura.service';
+import { api } from '../model/api';
 
+const apiData: api = new api();
 
 @Component({
   selector: 'app-parametros-estrutura',
@@ -16,7 +18,7 @@ export class ParametrosEstruturaComponent {
   @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
   @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
 
-  readonly serviceApi = 'http://192.168.2.235:7200/rest/cardallapis/ZX2'; 
+  readonly serviceApi = apiData.URL + '/cardallapis/ZX2?pagesize=1000'; 
   actionsRight = false;
   detailedUser: any;
   dependents: any;
@@ -24,9 +26,7 @@ export class ParametrosEstruturaComponent {
   fixedFilter = false;
 
   readonly actions: PoPageDynamicTableActions = {
-    new: '/orcamentos/cadastro-parametros',
-    remove: true,
-    removeAll: true
+    new: '/orcamentos/cadastro-parametros'
   };
 
   public readonly breadcrumb: PoBreadcrumb = {
@@ -57,12 +57,9 @@ export class ParametrosEstruturaComponent {
   // "zx2_fmt": 2.5
 
   fields: Array<PoPageDynamicTableFilters> = [
-    { property: 'zx2_cod', label: 'Mão de Obra', key: true, filter: true },
-    { property: 'zx2_tpprod', label: 'Tp. Prod.', filter: true, type: 'label',
-      labels: [
-        { value: 'K', label: 'Kg/h', color: 'color-01' },
-      ]
-    },
+    { property: 'zx2_cod', label: 'Código', key: true, filter: true }, 
+    { property: 'zx2_desc', label: 'Descrição', key: true, filter: true }, 
+    { property: 'zx2_mod', label: 'Mão de Obra', filter: true }, 
     { property: 'zx2_vlprod', label: 'Produtividade', filter: true},
     { property: 'zx2_kit', label: 'Kit Tinta', filter: true }, 
     { property: 'zx2_var', label: 'Variável', filter: true, type: 'label',
@@ -106,20 +103,21 @@ export class ParametrosEstruturaComponent {
   tableCustomActions: Array<PoPageDynamicTableCustomTableAction> = [
     {
       label: 'Editar',
-      url: '/cadastro-parametros/:id',
+      action: this.editarParametro.bind(this),
       icon: 'po-icon-edit'
     },
     {
-      label: 'Estruturas',
-      action: this.onClickEstruturas.bind(this),
-      visible: this.possuiEstruturas.bind(this),
-      icon: 'an an-tree-view'
+      label: 'Excluir',
+      action: this.deletarParametro.bind(this),
+      icon: 'po-icon-delete'
     }
   ];
 
   constructor(
       private parametrosEstruturaService: ParametrosEstruturaService,
-      private router: Router
+      private router: Router,
+      private poDialog: PoDialogService,
+      private poNotification: PoNotificationService
   ) {}
 
   ngOnInit(): void {
@@ -162,6 +160,34 @@ export class ParametrosEstruturaComponent {
 
   printPage() {
     window.print();
+  }
+
+  private editarParametro(parametro: any) {
+    console.log(parametro)
+    //this.router.navigate(['/orcamentos/cadastro-parametros', parametro]);
+    this.router.navigate(['/orcamentos/cadastro-parametros'], 
+      { queryParams: { parametro: JSON.stringify(parametro) }});
+  }
+
+  private deletarParametro(parametro: any) {
+    this.poDialog.confirm({
+      title: 'Excluir',
+      message: 'Deseja realmente excluir o parâmetro?',
+      confirm: () => {
+        this.parametrosEstruturaService.deleteParametro(parametro).subscribe(
+          response => {
+            console.log('parâmetro deletado', response);
+    
+            this.poNotification.success('Parâmetro excluído com sucesso');
+            
+          },
+          error => {
+            console.error('Erro ao excluir registro', error);
+          }
+        );
+      },
+      cancel: () => console.log('Cancelado')
+    }); 
   }
 
   private onClickUserDetail(user: any) {

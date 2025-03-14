@@ -3,6 +3,9 @@ import { PoBreadcrumb, PoDialogService, PoDynamicViewField, PoModalComponent, Po
 import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters, PoPageDynamicTableActions, PoPageDynamicTableCustomAction, PoPageDynamicTableCustomTableAction, PoPageDynamicTableOptions } from '@po-ui/ng-templates';
 import { Router } from '@angular/router';
 import { ListaOrcamentosService } from './shared/service/lista-orcamentos.service';
+import { api } from '../model/api';
+
+const apiData: api = new api();
 
 @Component({
   selector: 'app-lista-orcamentos',
@@ -15,7 +18,7 @@ export class ListaOrcamentosComponent {
   @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
   @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
 
-  readonly serviceApi = 'http://192.168.2.235:7200/rest/cardallapis/SA1'; 
+  readonly serviceApi = apiData.URL + '/cardallapis/SA1'; 
   actionsRight = false;
   detailedUser: any;
   dependents: any;

@@ -1,8 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
-import { PoBreadcrumb, PoDynamicFormField, SharedModule } from '../shared/shared.module';
-import { PoPageDynamicEditComponent, PoPageDynamicEditActions, PoPageDynamicEditLiterals  } from '@po-ui/ng-templates';
+import { Component, ViewChild, OnInit, viewChild } from '@angular/core';
+import { PoBreadcrumb, PoDynamicFormField, SharedModule, PoNotificationService } from '../shared/shared.module';
 import { Router } from '@angular/router';
-import { CadastraParametrosService } from './shared/service/cadastra-parametros.service'; 
+import { CadastraParametrosService } from './shared/service/cadastra-parametros.service';
+import { PoDialogService, PoDynamicFormValidation, PoPageAction, PoDynamicFormComponent } from '@po-ui/ng-components';
+import { api } from '../model/api';
+import { ActivatedRoute } from '@angular/router';
+
+const apiData: api = new api();
 
 @Component({
   selector: 'app-cadastra-parametros',
@@ -12,25 +16,33 @@ import { CadastraParametrosService } from './shared/service/cadastra-parametros.
   styleUrl: './cadastra-parametros.component.css'
 })
 export class CadastraParametrosComponent {
-  @ViewChild('dynamicEdit', { static: true }) dynamicEdit: PoPageDynamicEditComponent | undefined;
-
+  @ViewChild('dynamicForm', { static: true }) dynamicForm: PoDynamicFormComponent | undefined;
+  
   constructor(
-      private router: Router,
-      private cadastraParametrosService: CadastraParametrosService
+    private router: Router,
+    private cadastraParametrosService: CadastraParametrosService,
+    private poDialog: PoDialogService,
+    private poNotification: PoNotificationService,
+    private route: ActivatedRoute
+    
   ) {}
 
-  public readonly serviceApi = 'https://po-sample-api.onrender.com/v1/people';
+  parametro: any;
+  isHideLoading = true;
+  isEdit = false;
 
-  public readonly actions: PoPageDynamicEditActions = {
-    save: '/documentation/po-page-dynamic-detail',
-    saveNew: '/documentation/po-page-dynamic-edit'
-  };
-
-  public readonly literals: PoPageDynamicEditLiterals = {
-    pageActionCancel: 'Descartar',
-    pageActionSave: 'Gravar',
-    pageActionSaveNew: 'Gravar e novo'
-  };
+  actions: PoPageAction[] = [
+    {
+      label: 'Salvar',
+      action: this.confirmSave.bind(this),
+      disabled: () => this.dynamicForm?.form.invalid
+    },
+    {
+      label: 'Voltar',
+      action: () => this.router.navigate(['orcamentos/parametros'])
+    }
+  ];
+ 
 
   public readonly breadcrumb: PoBreadcrumb = {
     items: [
@@ -42,29 +54,20 @@ export class CadastraParametrosComponent {
 
   public readonly fields: Array<PoDynamicFormField> = [
     { 
-      property: 'b1_cod', 
+      property: 'zx2_cod', 
       divider: 'Mão de Obra', 
       label: 'Mão de Obra', 
       key: true, 
-      required: true, 
-      optionsService: 'http://192.168.2.235:7200/rest/cardallapis/SB1',
-      optionsMulti: false
-    },
+      optionsService: apiData.URL + "/cardallapis/produtos?filter=b1_grupo eq '99'",
+      optionsMulti: false,
+      fieldLabel: 'b1_desc',
+      fieldValue: 'b1_cod'
+    }, 
     { 
-      property: 'g1_cod', 
-      label: 'Estruturas', 
-      key: true, 
-      required: true, 
-      optionsService: 'http://192.168.2.235:7200/rest/cardallapis/SG1',
-      optionsMulti: true
-    },
-    { 
-      property: 'zx2_tpprod', 
-      label: 'Tp. Prod.', 
+      property: 'zx2_desc', 
+      label: 'Descrição', 
       required: true,
-      options:[
-        { value: 'K', label: 'Kg/h', color: 'color-01' }
-      ]
+      maxLength: 70 
     },
     { 
       property: 'zx2_vlprod', 
@@ -77,26 +80,73 @@ export class CadastraParametrosComponent {
       divider: 'Kit Tinta', 
       label: 'Kit Tinta', 
       key: true, 
-      required: true, 
-      optionsService: 'http://192.168.2.235:7200/rest/cardallapis/SB1',
-      optionsMulti: false
+      optionsService: apiData.URL + "/cardallapis/produtos?filter=b1_grupo eq '40'",
+      optionsMulti: false,
+      fieldLabel: 'b1_desc',
+      fieldValue: 'b1_cod'
     },
-    { property: 'zx2_cmc', divider: 'Consumíveis', label: '% Cons. MC', type: 'number', offsetMdColumns: 6,
-      offsetLgColumns: 6,
-      gridMdColumns: 6,
-      gridLgColumns: 6 },
-    { property: 'zx2_cmt', label: '% Cons. MT', type: 'number', gridLgColumns: 6 },
-    { property: 'zx2_smc', label: '% Sucata MC', type: 'number', gridLgColumns: 6 },
-    { property: 'zx2_smt', label: '% Sucata MT', type: 'number', gridLgColumns: 6 },
-    { property: 'zx2_fmc', label: '% Frete MC', type: 'number', gridLgColumns: 6 },
-    { property: 'zx2_fmt', label: '% Frete MT', type: 'number', gridLgColumns: 6  }
+    { property: 'zx2_cmc', divider: 'Consumíveis', label: '% Cons. MC', type: 'number', mask: '99.99' },
+    { property: 'zx2_cmt', label: '% Cons. MT', type: 'number', mask: '99.99' },
+    { property: 'zx2_smc', label: '% Sucata MC', type: 'number', mask: '99.99' },
+    { property: 'zx2_smt', label: '% Sucata MT', type: 'number', mask: '99.99' },
+    { property: 'zx2_fmc', label: '% Frete MC', type: 'number', mask: '99.99' },
+    { property: 'zx2_fmt', label: '% Frete MT', type: 'number', mask: '99.99'  }
   ];
 
-  onKeyDown(property: string, event: KeyboardEvent): void {
-    if (event.code === 'F9') {
-      if (this.dynamicEdit) {
-        this.dynamicEdit.showAdditionalHelp(property);
+  ngOnInit() {
+    this.route.queryParams.subscribe(
+      params => {
+        if (params && params['parametro']) {
+          this.parametro =  JSON.parse(params['parametro']); 
+          this.isEdit = true; 
+          console.log('parametros',this.parametro); 
+        }
       }
-    }
+    )
+  } 
+
+  confirmSave() {
+    this.poDialog.confirm({
+      title: 'Confirmação',
+      message: 'Deseja realmente salvar o registro?',
+      confirm: () => this.saveRecord(),
+      cancel: () => console.log('Cancelado')
+    });
   }
+
+  retornar() {
+    this.router.navigate(['orcamentos/parametros'])
+  }
+
+  saveRecord() {
+    this.isHideLoading = false;
+ 
+    console.log('Salvando registro', this.parametro);
+    // if (this.isEdit) {
+    //   this.cadastraParametrosService.editParametro(this.parametro).subscribe(
+    //     response => {
+    //       console.log('Registro salvo', response);
+    //       this.isHideLoading = true;
+    //       this.poNotification.success('Parâmetro atualizado com sucesso');
+    //       this.router.navigate(['orcamentos/parametros']);
+    //     },
+    //     error => {
+    //       console.error('Erro ao editar registro', error);
+    //     }
+    //   );
+    // } else {
+    //   this.cadastraParametrosService.saveParametro(this.parametro).subscribe(
+    //     response => {
+    //       console.log('Registro salvo', response);
+    //   this.isHideLoading = true;
+
+    //       this.poNotification.success('Parâmetro criado com sucesso');
+    //       this.router.navigate(['orcamentos/parametros']);
+    //     },
+    //     error => {
+    //       console.error('Erro ao salvar registro', error);
+    //     }
+    //   );
+    // }
+  } 
 }

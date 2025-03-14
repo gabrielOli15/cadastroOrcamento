@@ -1,11 +1,12 @@
-<po-page-dynamic-edit
-  #dynamicEdit
-  [p-auto-router]="true"
-  p-title="Cadastro de Parâmetros"
-  [p-actions]="actions"
-  [p-breadcrumb]="breadcrumb"
-  [p-fields]="fields"
-  [p-literals]="literals"
-  [p-service-api]="serviceApi"
->
-</po-page-dynamic-edit>
+<po-page-default p-title="Cadastro de Parâmetros" 
+  [p-breadcrumb]="breadcrumb" 
+  [p-actions]="actions">  
+  
+  <po-loading-overlay [hidden]="isHideLoading" p-text="Salvando, aguarde"></po-loading-overlay>
+  <po-dynamic-form #dynamicForm 
+    [p-fields]="fields" 
+    [p-value]="parametro"
+    >
+  </po-dynamic-form>
+
+</po-page-default>

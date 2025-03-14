@@ -4,6 +4,9 @@ import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters, PoPageDynamicT
 import { Router } from '@angular/router';
 import { EstruturaOrcamentoService } from './shared/service/estrutura-orcamento.service';
 import { Estruturas } from './shared/interface/pedidos';
+import { api } from '../model/api';
+
+const apiData: api = new api();
 
 @Component({
     selector: 'app-estrutura-orcamento',
@@ -13,10 +16,10 @@ import { Estruturas } from './shared/interface/pedidos';
     styleUrl: './estrutura-orcamento.component.css'
 })
 export class EstruturaOrcamentoComponent {
-  @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
+    @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
     @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
   
-    readonly serviceApi = 'http://192.168.2.235:7200/rest/cardallapis/SB1'; 
+    readonly serviceApi = apiData.URL + '/cardallapis/SB1'; 
     actionsRight = false;
     detailedUser: any;
     dependents: any;
@@ -155,7 +158,8 @@ export class EstruturaOrcamentoComponent {
       onView($event: Event) {
       console.log('onView');
     }
-      onDelete($event: Event) {
+    
+    onDelete($event: Event) {
       console.log('onDelete');
     }
       onDuplicate($event: Event) {

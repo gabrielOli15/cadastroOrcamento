@@ -16,12 +16,12 @@ export class SolicitaOrcamentoComponent {
   validateFields: Array<string> = ['state'];
 
   public readonly breadcrumb: PoBreadcrumb = {
-      items: [
-        { label: 'Orçamentos', action: () => this.router.navigate(['/']) },
-        { label: 'Solicitações', action: () => this.router.navigate(['orcamentos/solicitar']) },
-        { label: 'Cadastro' }
-      ]
-    };
+    items: [
+      { label: 'Orçamentos', action: () => this.router.navigate(['/']) },
+      { label: 'Solicitações', action: () => this.router.navigate(['orcamentos/solicitar']) },
+      { label: 'Cadastro' }
+    ]
+  };
 
   fields: Array<PoDynamicFormField> = [
     {
