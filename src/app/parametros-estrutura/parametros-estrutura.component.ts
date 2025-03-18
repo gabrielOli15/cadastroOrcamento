@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { PoBreadcrumb, PoDialogService, PoDynamicViewField, PoModalComponent, PoNotification, PoNotificationService, PoPageAction, PoSelectOption, PoTableColumn, PoTableColumnSpacing, SharedModule } from '../shared/shared.module';
-import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters, PoPageDynamicTableActions, PoPageDynamicTableCustomAction, PoPageDynamicTableCustomTableAction, PoPageDynamicTableOptions, PoPageDynamicTableFilters } from '@po-ui/ng-templates';
+import { PoPageDynamicSearchLiterals, PoPageDynamicSearchFilters, PoPageDynamicTableActions, PoPageDynamicTableCustomAction, PoPageDynamicTableCustomTableAction, PoPageDynamicTableOptions, PoPageDynamicTableFilters, PoPageDynamicTableComponent } from '@po-ui/ng-templates';
 import { Router } from '@angular/router';
 import { ParametrosEstruturaService } from './shared/service/parametros-estrutura.service';
 import { api } from '../model/api';
@@ -17,8 +17,9 @@ const apiData: api = new api();
 export class ParametrosEstruturaComponent {
   @ViewChild('userDetailModal') userDetailModal!: PoModalComponent;
   @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
+  @ViewChild('dynamicTable', { static: true }) dynamicTable!: PoPageDynamicTableComponent;
 
-  readonly serviceApi = apiData.URL + '/cardallapis/ZX2?pagesize=1000'; 
+  readonly serviceApi = apiData.URL + '/cardallapis/ZX2/ZX2_COD?pagesize=1000'; 
   actionsRight = false;
   detailedUser: any;
   dependents: any;
@@ -67,8 +68,7 @@ export class ParametrosEstruturaComponent {
         { value: 'P', label: 'Peso', color: 'color-01' },
         { value: 'E', label: 'Externa', color: 'color-02' },
         { value: 'I', label: 'Interna', color: 'color-03' },
-        { value: 'A', label: 'Ambas', color: 'color-04' },
-        { value: '-', label: 'n/a', color: 'color-05' }
+        { value: '-', label: 'Não possui', color: 'color-05' }
       ]
     }, 
     { property: 'zx2_cmc', label: '% Cons. MC', filter: true },
@@ -92,12 +92,12 @@ export class ParametrosEstruturaComponent {
   ];
 
   pageCustomActions: Array<PoPageDynamicTableCustomAction> = [
-    { label: 'Print', action: this.printPage.bind(this), icon: 'an an-printer' },
-    {
-      label: 'Download .csv',
-      action: this.parametrosEstruturaService.downloadCsv.bind(this.parametrosEstruturaService, this.serviceApi),
-      icon: 'an an-download-simple'
-    }
+    // { label: 'Print', action: this.printPage.bind(this), icon: 'an an-printer' },
+    // {
+    //   label: 'Download .csv',
+    //   action: this.parametrosEstruturaService.downloadCsv.bind(this.parametrosEstruturaService, this.serviceApi),
+    //   icon: 'an an-download-simple'
+    // }
   ];
 
   tableCustomActions: Array<PoPageDynamicTableCustomTableAction> = [
@@ -178,8 +178,8 @@ export class ParametrosEstruturaComponent {
           response => {
             console.log('parâmetro deletado', response);
     
-            this.poNotification.success('Parâmetro excluído com sucesso');
-            
+            this.poNotification.success('Parâmetro excluído com sucesso'); 
+            this.dynamicTable.updateDataTable({page: 1, pagesize: 1000});
           },
           error => {
             console.error('Erro ao excluir registro', error);

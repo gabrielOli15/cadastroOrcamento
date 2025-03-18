@@ -20,7 +20,8 @@ export class CadastraParametrosService {
   }
 
   editParametro(parametro: any): Observable<any> {
+    console.log('editParametro');
     console.log(parametro);
-    return this.http.put(this.apiUrl, parametro);
+    return this.http.put(this.apiUrl + '/' + parametro.zx2_cod, parametro);
   }
 }

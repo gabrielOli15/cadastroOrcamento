@@ -14,6 +14,10 @@ export class ParametrosEstruturaService {
   
   private serviceApi = apiData.URL + '/cardallapis/parametro';
 
+  getParametros() {
+    return this.http.get(apiData.URL + '/cardallapis/ZX2/ZX2_COD?pagesize=1000');
+  }
+
   editParametro(parametro: any): Observable<any> {
     console.log(parametro);
     return this.http.put(this.serviceApi + '/' + parametro.zx2_cod, parametro);

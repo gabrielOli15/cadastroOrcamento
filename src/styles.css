@@ -416,6 +416,18 @@ body {
     color: #24224c;
 }
 
+.po-search .po-search-button {
+    color: #24224c;
+}
+
+.po-search .po-search-button po-clean.po-icon-input i.po-field-icon {
+    color: #24224c;
+}
+
+.po-search .po-search-button.po-search-button-trigger {
+    color: #24224c;
+}
+
 :root {
     --color-stepper-circle-active: #24224c;
     --color-stepper-circle-default: #24224c;

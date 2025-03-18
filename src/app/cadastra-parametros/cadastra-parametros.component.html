@@ -1,8 +1,7 @@
-<po-page-default p-title="Cadastro de Parâmetros" 
+<po-page-default [p-title]="isEdit ? 'Editar Parâmetro' : 'Novo Parâmetro'"
   [p-breadcrumb]="breadcrumb" 
   [p-actions]="actions">  
   
-  <po-loading-overlay [hidden]="isHideLoading" p-text="Salvando, aguarde"></po-loading-overlay>
   <po-dynamic-form #dynamicForm 
     [p-fields]="fields" 
     [p-value]="parametro"

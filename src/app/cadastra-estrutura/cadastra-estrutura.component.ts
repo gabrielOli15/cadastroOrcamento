@@ -1,14 +1,18 @@
 import { Component, HostListener, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CadastraEstruturaService } from './shared/service/cadastra-estrutura.service';
+import { ParametrosEstruturaService } from '../parametros-estrutura/shared/service/parametros-estrutura.service';
 import { PoBreadcrumb, PoDialogService, PoModalComponent, PoMultiselectOption, 
   PoNotificationService, PoSelectOptionGroup, PoStepperComponent, PoTableAction, 
   PoTableColumn, PoTableComponent, PoTreeViewItem, SharedModule, PoStepComponent } 
   from '../shared/shared.module';
-import { PoAccordionComponent, PoAccordionItemComponent, PoModalAction, PoNotification, PoStepperModule } from '@po-ui/ng-components';
+import { PoAccordionComponent, PoAccordionItemComponent, PoModalAction, PoNotification, PoStepperModule, PoTableColumnSpacing } from '@po-ui/ng-components';
 import { Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { PoPageDynamicSearchFilters, PoPageDynamicSearchLiterals } from '@po-ui/ng-templates';
+import { api } from '../model/api';
+
+const apiData: api = new api();
 
 @Component({
     selector: 'app-cadastra-estrutura',
@@ -36,7 +40,7 @@ export class CadastraEstruturaComponent {
     filteredProdutosEstrutura: Array<any> = [];
     produtosTree: Array<any> = [Array<PoTreeViewItem>];
     itemsListSelected: Array<any> = [];
-    isLoadingPayment: boolean = false;
+    isLoadingBusca: boolean = false;
     confirmaEstrutura: boolean = false;
     statusEstrutura: boolean = true;
     tipoEstrutura: boolean = true;
@@ -49,7 +53,10 @@ export class CadastraEstruturaComponent {
     lastSelectedIndex: number | null = null;
     selectedIndex: number = 0;
     poDialog: any;
+    parametrosUrl: string = apiData.URL + '/cardallapis/ZX2/ZX2_DESC';
     itemsServicos: Array<any> = [{ item: 'Mão de Obra', valor: 0 }, { item: 'Kit de Tinta', valor: 0 }, { item: 'C+S+F', valor: 0 }];
+    
+    readonly tableSpacing: PoTableColumnSpacing = PoTableColumnSpacing.Small;
 
     public readonly breadcrumb: PoBreadcrumb = {
       items: [
@@ -59,20 +66,7 @@ export class CadastraEstruturaComponent {
       ]
     };
 
-    tipoEquipamento: Array<PoSelectOptionGroup> = [
-      {
-      label: 'Tipos de Estrutura',
-      options: [
-        { value: 'livre', label: 'Estrutura Livre' },
-        { value: 'GG', label: 'GASTOS GERAIS' },
-        { value: 'MC', label: 'MATERIAL DE CONSUMO' },
-        { value: 'ME', label: 'MERCADORIA' },
-        { value: 'MO', label: 'MAO DE OBRA' },
-        { value: 'MP', label: 'MATERIA PRIMA' },
-        { value: 'PA', label: 'PRODUTO ACABADO' }
-      ]
-      }
-    ];
+    parametros: any[] = [];
 
     grupoEstrutura: Array<PoSelectOptionGroup> = [
       {
@@ -137,12 +131,16 @@ export class CadastraEstruturaComponent {
       return !!this.confirmaEstrutura;
     }
 
-    adicionarEstrutura() {
+    adicionarEstrutura(label: string) {
+      if (this.estruturas.length > 0) {
+        this.produtosTree.push(Array<PoTreeViewItem>);
+      }
       this.estruturas.push({ 
         index: this.estruturas.length, 
+        label: label
       });
-      this.produtosTree.push(Array<PoTreeViewItem>);
       this.itemsServicos.push([{ item: 'Mão de Obra', valor: 0 }, { item: 'Kit de Tinta', valor: 0 }, { item: 'C+S+F', valor: 0 }]);
+      return this.estruturas.length;
     }
 
     removerEstrutura(index) {
@@ -194,7 +192,7 @@ export class CadastraEstruturaComponent {
           label: item.label,
           value: item.value,
           pai: item.pai,
-          subItems: item.subItems.map(mapSubItems)
+          subItems: item.subitems.map(mapSubItems)
         };
       };
 
@@ -321,7 +319,7 @@ export class CadastraEstruturaComponent {
       }
       this.lastSelectedIndex = this.selectedIndex; 
     }
-    
+
     copiarEstrutura(){
       let itensFiltro: any = this.produtosEstrutura.flatMap(
         (item) => {
@@ -494,6 +492,15 @@ export class CadastraEstruturaComponent {
       }
     } 
 
+    BuscarProdutos(event: Array<any>) {
+      this.isLoadingBusca = true;
+      this.cadastraEstruturaService.getProdutos(event).subscribe(produtos => {
+        console.log(produtos);
+        this.produtosBusca = produtos as any && (produtos as any).items || [];
+        this.isLoadingBusca = false;
+      });
+    }
+
     filtrarProdutos(event: Array<any>) {
       if (event.length === 0) {
         this.produtosEstrutura = this.produtosEstruturaCompleta;
@@ -539,15 +546,114 @@ export class CadastraEstruturaComponent {
       return this.cadastraEstruturaService.getPageOptions();
     }
       
-    close: PoModalAction = {
+    selecionar: PoModalAction = {
       action: () => {
-        this.poModal.close();
+        this.selecionarProdutoBusca();
       },
-      label: 'Fechar',
-      danger: true
+      label: 'Selecionar'
     };   
 
+    novoProduto: PoModalAction = {
+      action: () => {
+        console.log('novo produto');
+      },
+      label: 'Novo Produto'
+    };   
+
+    selecionarProdutoBusca(): void {
+      // preencher produtosEstrutura com os produtosBusca com $Selected
+      this.produtosBusca.forEach(item => {
+        if (item.$selected){
+          // valida se item não está dentro de this.produotos
+          if (!this.produtos.find(produto => produto.value === item.value)) {
+            console.log('item',item);
+
+            const idEstrutura = this.adicionarEstrutura(item.value + ' - ' + item.label);
+  
+            item.estrutura = idEstrutura;
+            this.produtos.push(item);
+            this.produtosEstrutura.push(item);
+
+            let treeViewItem: PoTreeViewItem 
+
+            let ItemsAux = [item];
+              
+            const mapsubItems = (item) => {
+              if (!item.subItems) {
+                return { 
+                  label: item.label, 
+                  value: item.value, 
+                  pai: item.pai,
+                  subItems: []
+                };
+              }
+              return {
+                label: item.label,
+                value: item.value,
+                pai: item.pai,
+                subItems: item.subItems.map(mapsubItems)
+              };
+            };
+
+            treeViewItem = ItemsAux.map(mapsubItems)[0];
+
+            console.log('idEstrutura',idEstrutura);
+            console.log('produtosTree',this.produtosTree);
+            console.log('treeViewItem',treeViewItem);
+
+            this.produtosTree[idEstrutura-1] = [{ ...treeViewItem }]
+
+            console.log('produtosTree',this.produtosTree[idEstrutura-1]);
+
+            // Define tabela de produtos
+            const mapsubItemsTable = (item) => {
+              if (!item.subItems) {
+                return { 
+                  estrutura: idEstrutura,
+                  pai: item.pai,
+                  value: item.value,
+                  label: item.label,
+                  UM: item.UM,
+                  quantidade: item.quantidade,
+                  peso: item.peso,
+                  custounit: item.custounit,
+                  custototal: item.custototal,
+                  custostandard: item.custostandard
+                };
+              }
+              return [{ 
+                estrutura: idEstrutura,
+                pai: item.pai,
+                value: item.value,
+                label: item.label,
+                UM: item.UM,
+                quantidade: item.quantidade,
+                peso: item.peso,
+                custounit: item.custounit,
+                custototal: item.custototal,
+                custostandard: item.custostandard
+              }, ...item.subItems.flatMap(mapsubItemsTable)];
+            };
+            
+            let produtoEstrutura: any = ItemsAux.flatMap(mapsubItemsTable);
+            this.produtosEstrutura = this.produtosEstrutura.filter(
+              item => item.estrutura !== idEstrutura
+            );
+            this.produtosEstrutura = [ ...this.produtosEstrutura, ...produtoEstrutura ];
+            this.filteredProdutosEstrutura = [...this.produtosEstrutura];
+            this.produtosEstruturaCompleta = [ ...this.produtosEstrutura];
+          }
+
+        }
+      });
+
+      this.poModal.close();
+    }
     
+
+    onChangeParametro(event) {
+      console.log(event);
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -570,12 +676,12 @@ export class CadastraEstruturaComponent {
     isConfirmed() {
       return !!this.confirmed;
     }
-  
-    
+
   
     constructor(
       private poAlert: PoDialogService,
       private cadastraEstruturaService: CadastraEstruturaService, 
+      private parametrosEstruturaService: ParametrosEstruturaService,
       private poNotification: PoNotificationService,
       private router: Router,
       private cdr: ChangeDetectorRef
@@ -601,8 +707,12 @@ export class CadastraEstruturaComponent {
     ngOnInit(): void {
       this.produtos = this.cadastraEstruturaService.getItems();
       this.columnsProdutosEstrutura = this.cadastraEstruturaService.getColumns();
+      this.columnsProdutosBusca = this.cadastraEstruturaService.getColumnsBusca();
 
-      //this.estruturas.push({ index: this.estruturas.length }); 
+      this.parametrosEstruturaService.getParametros().subscribe(params => {
+        console.log(params);
+        this.parametros = params as Array<any>;
+      });
     }
    
     registro() {
@@ -650,10 +760,6 @@ export class CadastraEstruturaComponent {
       });
     }
   
-    
-  
-    
-  
     details() {
       this.poModal.open();
     }
@@ -686,8 +792,6 @@ export class CadastraEstruturaComponent {
       this.totalExpanded += 1;
     }
   
-    
-  
     restoreColumn() {
       this.columnsProdutosEstrutura = this.columnsDefault;
     }
@@ -711,10 +815,6 @@ export class CadastraEstruturaComponent {
         confirm: () => this.router.navigate(['/' + itemBreadcrumbLabel])
       });
     }
-
-    
-
-    
 
     opcoesServicos: Array<PoMultiselectOption> = [
       { value: 'Servico1', label: 'Servico 1' },
