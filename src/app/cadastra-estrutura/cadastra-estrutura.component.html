@@ -1,94 +1,119 @@
-<po-page-default [p-breadcrumb]="breadcrumb" p-title="Nova Estrutura de Orçamento">
-  <div>
-    <po-stepper #stepper [p-sequential]="true">
-      <po-step p-label="Definição" class="tsc-center">
-       <!-- [p-can-active-next-step]="isConfirmedEstrutura.bind(this)" -->
-       <po-widget
-          [p-height]="580"
-          class="po-md-8"
-          p-primary-label="Próximo passo"
-          p-title="Identifique a estrutura"
-          (p-primary-action)="stepper.next()">
-          <form #definicaoForm="ngForm">
-            <div class="po-row">
-              <po-input
-                class="po-md-6"
-                name="descricao"
-                [(ngModel)]="nomeEstrutura"
-                p-label="Descrição"
-                [p-optional]="false"
-                p-placeholder=""
-                p-required="true"
-                p-readonly="false"
-                p-auto-focus="true">
-              </po-input>
-            </div>
-            <div class="po-row">                
-              <po-switch 
-                class="po-md-2"
-                name="switch" 
-                p-label="Estrutura" 
-                [(ngModel)]="tipoEstrutura"
-                p-label-off="Especial"
-                p-label-on="Padrão">
-              </po-switch>
-              <po-switch 
-                class="po-md-3"
-                name="switch" 
-                p-label="Estrutura Especial" 
-                [p-disabled]="tipoEstrutura ? true : false"
-                [(ngModel)]="tipoEstEspecial"
-                p-label-off="Recuperação de Calor"
-                p-label-on="Genérica">
-              </po-switch>
-            </div>
-            <div class="po-row">
-              <po-multiselect 
-                class="po-md-6"
-                p-auto-height="true"
-                (p-change)="onChangeParametro($event)"   
-                p-field-label="zx2_desc"
-                p-field-value="zx2_cod"
-                [p-filter-service]="parametrosUrl" 
-                p-hide-select-all="true"
-                p-label="Parâmetro"
-                p-placeholder="Selecione um parâmetro">
-              </po-multiselect> 
-              <po-switch 
-                class="po-md-12"
-                name="switch" 
-                p-label="Status" 
-                [(ngModel)]="statusEstrutura"
-                p-label-off="Bloqueada"
-                p-label-on="Disponível">
-              </po-switch>
-            </div>
-          </form>
-        </po-widget>
-      </po-step>
-      <po-step p-label="Estrutura">
-        <p class="po-font-subtitle">Faça a criação da estrutura</p>
+<po-page-default [p-breadcrumb]="breadcrumb" p-title="Nova Estrutura de Orçamento" [p-actions]="pageActions">
+  <po-stepper #stepper 
+    [p-sequential]="true"
+    p-step-icon-active="an an-factory"
+    p-step-icon-inactive="po-icon-check"
+    p-step-icon-complete="po-icon-check">
+    <po-step p-label="Definição" class="tsc-center" [p-can-active-next-step]="isConfirmedEstrutura.bind(this,1)" >
+      <po-widget
+        class="po-md-5"
+        p-primary-label="Próximo passo"
+        p-title="Definição da estrutura"
+        (p-primary-action)="stepper.next()">
+        <form #definicaoForm="ngForm">
+          <div class="po-row">                
+            <po-switch 
+              class="po-md-4"
+              name="switch" 
+              p-label="Tipo de Estrutura" 
+              [(ngModel)]="tipoEstrutura"
+              p-label-off="Especial"
+              p-label-on="Padrão">
+            </po-switch>
+            <po-switch 
+              class="po-md-4"
+              name="switch" 
+              p-label="Status" 
+              [(ngModel)]="statusEstrutura"
+              p-label-off="Bloqueada"
+              p-label-on="Disponível">
+            </po-switch>
+          </div>
+          <div class="po-row">
+            <po-input
+              class="po-md-10"
+              name="descricao"
+              [(ngModel)]="nomeEstrutura"
+              p-placeholder="Nome da estrutura"
+              p-label="Descrição"
+              [p-optional]="false"
+              p-required="true"
+              p-readonly="false"
+              p-auto-focus="true">
+            </po-input>
+          </div>
+          <div class="po-row">
+            <po-multiselect 
+              class="po-md-10"
+              p-auto-height="true"
+              name="parametroEstrutura"
+              [(ngModel)]="parametroEstrutura"
+              (p-change)="onChangeParametro($event, parametroEstrutura)"   
+              p-field-label="zx2_desc"
+              p-field-value="zx2_cod"
+              [p-disabled]="!tipoEstrutura"
+              [p-filter-service]="parametrosUrl" 
+              p-hide-select-all="true"
+              p-label="Parâmetro"
+              p-placeholder="Selecione os parâmetros para o cálculo">
+            </po-multiselect> 
+          </div>
+          <div class="po-row">
+            <po-input
+              class="po-md-5"
+              name="areaInterna"
+              [(ngModel)]="areaInterna"
+              p-label="Área Interna"
+              [p-optional]="true"
+              type="number"
+              p-placeholder="Valor área interna"
+              p-readonly="false"
+              p-auto-focus="true">
+            </po-input>
+            <po-input
+              class="po-md-5"
+              name="areaExterna"
+              [(ngModel)]="areaExterna"
+              p-label="Área Externa"
+              [p-optional]="true"
+              type="number"
+              p-placeholder="Valor área externa"
+              p-readonly="false"
+              p-auto-focus="true">
+            </po-input>
+          </div>
+          <div class="po-row">
+            <po-textarea
+              class="po-md-10"
+              name="observacao"
+              [(ngModel)]="observacao"  
+              p-label="Observação"
+              [p-optional]="true"  
+              [p-rows]="2">
+            </po-textarea>              
+          </div> 
+        </form>
+      </po-widget>
+    </po-step>
+    <po-step p-label="Estrutura" class="tsc-center" [p-can-active-next-step]="isConfirmedEstrutura.bind(this,2)">
+      <po-widget
+        class="po-md-12"
+        p-primary-label="Próximo passo"
+        p-title="Montagem da Estrutura"
+        (p-primary-action)="geraTotaisEstruturas()">
         <div class="po-lg-4">
           <div class="po-table-actions">
-            <!-- <po-button 
-              p-icon="an an-plus"
-              p-label="Estrutura"
-              p-small="false"
-              p-kind="default"
-              (p-click)="adicionarEstrutura('Estrutura ' + (estruturas.length + 1))">
-            </po-button> -->
             <po-button 
               p-icon="an an-plus"
-              p-label="Buscar"
+              p-label=" "
               p-small="false"
               p-kind="default"
-              (p-click)="details()">
+              (p-click)="modelProdutos(null)">
             </po-button>
           </div>
           <po-accordion
             #accordion 
-            [p-show-manager-accordion]="true"
-            >
+            [p-show-manager-accordion]="true">
             <po-accordion-item 
               class="po-md-6"
               *ngFor="let estrutura of estruturas; let i = index" 
@@ -98,24 +123,23 @@
                 <po-tag
                   p-color="color-0{{ i+1 }}"
                   p-value="Estrutura {{i+1}}" 
-                  p-text-color="white"
-                  >
+                  p-text-color="white">
                 </po-tag>
               </div>
-              <div class="po-row">&nbsp;</div>  
-                <!-- <po-select
-                  class="po-md-6"
-                  name="produto"
-                  (p-change)="onChangeProduto($event,i)"
-                  p-disabled="false"
-                  p-label="Produto"
-                [p-options]="produtos"
-                p-optional="false"
-                p-placeholder=""
-                p-required="false"
-                p-readonly="false"
-                p-auto-focus="false">
-              </po-select> -->
+              <div class="po-row">&nbsp;</div>
+              <div class="po-table-actions">
+                <po-button
+                  p-icon="an an-trash"
+                  p-label=" "
+                  p-danger="true"
+                  (p-click)="removerEstrutura(i)">
+                </po-button>
+                <po-button 
+                  p-icon="an an-plus"
+                  p-label=" "
+                  (p-click)="modelProdutos(i)">
+                </po-button>
+              </div>
               <po-tree-view
                 [p-selectable]="true"
                 [p-items]="produtosTree[i]"
@@ -123,85 +147,61 @@
                 (p-unselected)="removerTreeItem($event)"
                 [p-max-level]="5">
               </po-tree-view>
+              
               <po-divider></po-divider>
-              <po-multiselect
-                name="servicos"
-                p-label="Serviços"
-                [p-options]="opcoesServicos"
-                (p-change)="changeservico($event)">
-              </po-multiselect>
+              <po-multiselect 
+                class="po-md-10"
+                p-auto-height="true"
+                name="parametroEstruturaEspecial"
+                [(ngModel)]="parametroEstruturaEspecial[i]"
+                [ngModelOptions]="{standalone: true}"
+                (p-change)="onChangeParametro($event,parametroEstruturaEspecial[i],i)"   
+                p-field-label="zx2_desc"
+                p-field-value="zx2_cod"
+                [p-disabled]="tipoEstrutura"
+                [p-filter-service]="parametrosUrl" 
+                p-hide-select-all="true"
+                p-label="Parâmetro"
+                p-placeholder="Selecione um parâmetro">
+              </po-multiselect> 
+              <po-divider></po-divider>
               <po-widget
-                p-title="Serviços da estrutura {{i+1}}"
+                p-title="Resumo da estrutura {{i+1}}"
                 (p-primary-action)="checkOut()">
                 <po-table
-                  p-striped
                   [p-spacing]="tableSpacing"
-                  [p-columns]="colunasServicos"
-                  [p-items]="itemsServicos[i]"
+                  [p-columns]="colunasTotais"
+                  [p-items]="itemsTotais[i]"
                   [p-hide-table-search]="true"
                   [p-hide-columns-manager]="true">
                 </po-table>
               </po-widget>
-              <po-button 
-                *ngIf="estruturas.length > 1"
-                class="po-table-actions"
-                p-icon="an an-trash"
-                p-label=" "
-                p-danger="true"
-                (p-click)="removerEstrutura(i)">
-              </po-button>
+              
             </po-accordion-item>
           </po-accordion> 
         </div>
         <div class="po-lg-8">
           <div class="po-table-actions">
             <div class="po-table-actions-batch-actions">
-                <po-button 
-                  p-icon="an an-trash"
-                  p-label=" "
-                  p-danger="true"
-                  [p-disabled]="acaoBotoesTable"
-                  (p-click)="deletarProdutoEstrutura()"
-                  >
-                </po-button>
-                <po-button 
-                  p-icon="an an-copy"
-                  p-label=" "
-                  [p-disabled]="acaoBotoesTable"
-                  (p-click)="copiarEstrutura()"
-                  >
-                </po-button>
-                <po-button 
-                  p-icon="an an-stack-plus"
-                  p-label=" "
-                  [p-disabled]="this.produtosEstruturaCopiar.length > 0 ? false : true"
-                  (p-click)="colarEstrutura()"
-                  >
-                </po-button>
-                <po-button 
-                  p-icon="an an-paint-bucket"
-                  p-label=" "
-                  [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
-                  (p-click)="gerarMaoDeObra()">
-                </po-button>
-                <po-button 
-                  p-icon="an an-wrench"
-                  p-label=" "
-                  [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
-                  (p-click)="gerarMaoDeObra()">
-                </po-button>
-                <po-button 
-                  p-icon="an an-truck"
-                  p-label="C+S+F"
-                  [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
-                  (p-click)="gerarMaoDeObra()">
-                </po-button>
-                <po-button 
-                  p-icon="an an-chat-text"
-                  p-label=" "
-                  [p-disabled]="this.produtosEstrutura.length > 0 ? false : true"
-                  (p-click)="gerarMaoDeObra()">
-                </po-button>
+              <po-button 
+                p-icon="an an-trash"
+                p-label=" "
+                p-danger="true"
+                [p-disabled]="acaoBotoesTable"
+                (p-click)="deletarProdutoEstrutura()">
+              </po-button>
+              <po-button 
+                p-icon="an an-copy"
+                p-label=" "
+                [p-disabled]="acaoBotoesTable"
+                (p-click)="copiarEstrutura()">
+              </po-button>
+              <po-button 
+                p-icon="an an-stack-plus"
+                p-label=" "
+                [p-disabled]="this.produtosEstruturaCopiar.length > 0 ? false : true"
+                (p-click)="colarEstrutura()">
+              </po-button>
             </div>
             <po-search
               p-placeholder="Pesquisar"
@@ -211,12 +211,11 @@
               [p-items]="produtosEstrutura"
               [p-filter-select]="listaFiltros"
               (p-filtered-items-change)="filtrarProdutos($event)"
-              (p-change-model)="VerificarFiltroProdutos($event)"
-            ></po-search>
+              (p-change-model)="VerificarFiltroProdutos($event)">
+            </po-search>
           </div>
           <po-table
             p-container="true"
-            [p-height]="1000"
             [p-hide-batch-actions]="true"
             [p-hide-columns-manager]="true"
             [p-hide-table-search]="true"
@@ -238,33 +237,24 @@
             [p-infinite-scroll]="true">
           </po-table>
         </div>
-      </po-step>
-      <po-step p-label="Produtividade" class="tsc-center" [p-can-active-next-step]="isConfirmed.bind(this)">
-        <po-widget
-          [p-height]="580"
-          class="po-md-8"
-          p-primary-label="Gravar estrutura"
-          p-title="Revise os totais da estrutura"
-          (p-primary-action)="checkOut()">
-          <po-table
-            [p-columns]="columnsItemsSelected"
-            [p-spacing]="tableSpacing"
-            [p-items]="itemsListSelected"
-            [p-hide-table-search]="true"
-            [p-hide-columns-manager]="true">
-          </po-table>
-        </po-widget>
-      </po-step>
-      <po-step p-label="Confirmação">
-        <po-widget>
-          <div class="po-row po-font-display">
-            <p>Estrutura finalizada</p>
-            <po-icon p-icon="po-icon an an-check"></po-icon>
-          </div>
-        </po-widget>
-      </po-step>
-    </po-stepper>
-  </div>
+      </po-widget>
+    </po-step>
+    <po-step p-label="Valores" class="tsc-center">
+      <po-widget
+        class="po-md-4"
+        p-title="Revisão da estrutura"
+        (p-primary-action)="salvarEstrutura()">
+        <po-table
+          [p-columns]="colunasTotais"
+          [p-spacing]="tableSpacing"
+          [p-items]="itemsTotalGeral"
+          [p-hide-table-search]="true"
+          [p-hide-columns-manager]="true">
+        </po-table>
+      </po-widget>
+    </po-step>
+  </po-stepper>
+
   <po-modal [p-title]="tituloModel" [p-primary-action]="selecionar" [p-secondary-action]="novoProduto">
     <po-loading-overlay *ngIf="isLoadingBusca" p-text="Carregando..."> </po-loading-overlay>
     <div class="po-table-actions">
@@ -275,8 +265,8 @@
         class="po-md-6"
         [p-items]="produtosBusca"
         (p-change-model)="BuscarProdutos($event)"
-        p-search-type="trigger"
-      ></po-search>
+        p-search-type="trigger">
+      </po-search>
     </div>
     <po-table
       p-container="true"
