@@ -63,7 +63,7 @@ export class CadastraParametrosComponent implements OnInit, OnDestroy {
   readonly fields: Array<PoDynamicFormField> = [
     {
       property: 'zx2_cod',
-      visible: this.isEdit,
+      divider: 'Parâmetro', 
       label: 'Código',
       key: true,
       required: true,
@@ -72,8 +72,17 @@ export class CadastraParametrosComponent implements OnInit, OnDestroy {
       gridSmColumns: 4
     },
     { 
+      property: 'zx2_desc', 
+      label: 'Descrição', 
+      placeholder: 'Nome do parâmetro',
+      required: true,
+      maxLength: 70,
+      gridColumns: 4,
+      gridSmColumns: 4 
+    },
+    { 
       property: 'zx2_mod', 
-      divider: 'Mão de Obra',
+      divider: 'Mão de Obra e Produtividade',
       label: 'Mão de Obra', 
       key: true, 
       optionsService: `${apiData.URL}/cardallapis/modobra`,
@@ -84,16 +93,20 @@ export class CadastraParametrosComponent implements OnInit, OnDestroy {
       gridSmColumns: 4
     }, 
     { 
-      property: 'zx2_desc', 
-      label: 'Descrição', 
-      required: true,
-      maxLength: 70,
+      property: 'zx2_tpprod', 
+      label: 'Tipo Produtividade', 
+      required: true, 
+      options: [
+        { value: 'K', label: 'KG/H', color: 'color-01' },
+        { value: 'H', label: 'Horas', color: 'color-02' } 
+      ],
+      type: 'label',
       gridColumns: 4,
-      gridSmColumns: 4 
+      gridSmColumns: 4
     },
     { 
       property: 'zx2_vlprod', 
-      label: 'Produtividade', 
+      label: 'Valor Produtividade', 
       required: true,
       type: 'number',
       gridColumns: 4,
@@ -125,31 +138,16 @@ export class CadastraParametrosComponent implements OnInit, OnDestroy {
     { 
       property: 'zx2_cmc', 
       divider: 'Consumíveis', 
-      label: '% Cons. MC', 
+      label: '% Consumíveis MC', 
       type: 'number', 
       maxValue: 100.00,
       gridColumns: 4,
       gridSmColumns: 4
     },
-    { 
-      property: 'zx2_cmt', 
-      label: '% Cons. MT', 
-      type: 'number', 
-      maxValue: 100.00,
-      gridColumns: 4,
-      gridSmColumns: 4
-    },
+    
     { 
       property: 'zx2_smc', 
       label: '% Sucata MC', 
-      type: 'number', 
-      maxValue: 100.00,
-      gridColumns: 4,
-      gridSmColumns: 4
-    },
-    { 
-      property: 'zx2_smt', 
-      label: '% Sucata MT', 
       type: 'number', 
       maxValue: 100.00,
       gridColumns: 4,
@@ -163,6 +161,22 @@ export class CadastraParametrosComponent implements OnInit, OnDestroy {
       gridColumns: 4,
       gridSmColumns: 4
     },
+    { 
+      property: 'zx2_cmt', 
+      label: '% Consumíveis MT', 
+      type: 'number', 
+      maxValue: 100.00,
+      gridColumns: 4,
+      gridSmColumns: 4
+    },
+    { 
+      property: 'zx2_smt', 
+      label: '% Sucata MT', 
+      type: 'number', 
+      maxValue: 100.00,
+      gridColumns: 4,
+      gridSmColumns: 4
+    }, 
     { 
       property: 'zx2_fmt', 
       label: '% Frete MT', 
@@ -195,6 +209,7 @@ export class CadastraParametrosComponent implements OnInit, OnDestroy {
           this.parametro = {
             zx2_cod: '',
             zx2_desc: '',
+            zx2_mod: '',
             zx2_kit: '',
             zx2_vlprod: 0,
             zx2_var: '',
@@ -203,7 +218,8 @@ export class CadastraParametrosComponent implements OnInit, OnDestroy {
             zx2_smc: 0,
             zx2_smt: 0,
             zx2_fmc: 0,
-            zx2_fmt: 0
+            zx2_fmt: 0,
+            zx2_tpprod: ''
           };
         }
       });
