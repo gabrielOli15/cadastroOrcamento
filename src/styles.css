@@ -118,6 +118,14 @@ input.po-input {
     background-color: #ffffff;
 }
 
+po-input {
+    --color: #24224c;
+    --color-hover: #fff100;
+    --text-color: #24224c;
+    --background-hover: #fffeee;
+    background-color: #ffffff;
+}
+
 po-select {
     --color: #000000;
     --color-hover: #fff100;
@@ -128,7 +136,7 @@ po-select {
 
 po-textarea {
     --color-hover: #fff100;
-    --background-hover: #fffeee;
+    --background-hover: #ffffff;
 }
 
 po-dropdown {
@@ -314,6 +322,21 @@ po-widget {
     --border-color-selected: #24224c;
     --border-color-hover: #24224c;
     --shadow-hover: #24224c;
+}
+
+po-stepper {
+    
+    --color-icon-done: #fff100;
+    --background-done: #24224c;
+    --color-line-done: #24224c;
+    --color-icon-current: #fff100;
+    --background-current: var(--color-action-default);
+    --font-weight-current: var(--font-weight-bold);
+    --font-size-circle: var(--font-size-sm);
+    --color-next: var(--color-action-disabled);
+    --text-color-next: var(--color-neutral-light-30);
+
+    --outline-color-focused: var(--color-action-focus);
 }
 
 .po-toolbar-title {
