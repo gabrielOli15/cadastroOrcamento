@@ -19,7 +19,7 @@ export class ParametrosEstruturaComponent {
   @ViewChild('dependentsModal') dependentsModal!: PoModalComponent;
   @ViewChild('dynamicTable', { static: true }) dynamicTable!: PoPageDynamicTableComponent;
 
-  readonly serviceApi = apiData.URL + '/cardallapis/ZX2/ZX2_COD?pagesize=1000'; 
+  readonly serviceApi = apiData.URL + '/cardallapis/ZX2/ZX2_COD?pagesize=50'; 
   actionsRight = false;
   detailedUser: any;
   dependents: any;
@@ -61,6 +61,12 @@ export class ParametrosEstruturaComponent {
     { property: 'zx2_cod', label: 'Código', key: true, filter: true }, 
     { property: 'zx2_desc', label: 'Descrição', key: true, filter: true }, 
     { property: 'zx2_mod', label: 'Mão de Obra', filter: true }, 
+    { property: 'zx2_tpprod', label: 'Tp. Produtividade', filter: true, type: 'label',
+      labels: [
+        { value: 'K', label: 'KG/H', color: 'color-01' },
+        { value: 'H', label: 'Horas', color: 'color-02' }
+      ]
+    },
     { property: 'zx2_vlprod', label: 'Produtividade', filter: true},
     { property: 'zx2_kit', label: 'Kit Tinta', filter: true }, 
     { property: 'zx2_var', label: 'Variável', filter: true, type: 'label',
@@ -68,7 +74,7 @@ export class ParametrosEstruturaComponent {
         { value: 'P', label: 'Peso', color: 'color-01' },
         { value: 'E', label: 'Externa', color: 'color-02' },
         { value: 'I', label: 'Interna', color: 'color-03' },
-        { value: '-', label: 'Não possui', color: 'color-05' }
+        { value: '', label: 'Não possui', color: 'color-05' }
       ]
     }, 
     { property: 'zx2_cmc', label: '% Cons. MC', filter: true },
