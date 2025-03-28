@@ -1,0 +1,6 @@
+{
+  "name": "Cadastro de orçamentos",
+  "version": "1.0.0",
+  "api_baseUrl": "http://177.184.144.123:7200/rest",
+  "productLine": "Protheus"
+}
